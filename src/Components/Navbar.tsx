@@ -7,7 +7,16 @@ function Navbar() {
     <div className='w-full bg-[#0c0c0c]'>
       <div className='flex justify-between w-[95%] mx-auto h-14'>
         <div className='flex items-center gap-8'>
-          <GiHamburgerMenu className='text-xl' />
+          <a
+            className='btn'
+            data-bs-toggle='offcanvas'
+            href='#offcanvasExample'
+            role='button'
+            aria-controls='offcanvasExample'
+          >
+            <GiHamburgerMenu className='text-xl' />
+          </a>
+
           <div className='flex items-center gap-1'>
             <FaYoutube className='text-3xl text-red-600' />
             <span className='text-xl'>YouTube</span>
