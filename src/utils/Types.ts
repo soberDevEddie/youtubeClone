@@ -1,4 +1,4 @@
-export interface HomeVideoCard {
+export interface HomeVideoCardType {
   videoId: string;
   videoThumbnail: string;
   videoDuration: string;
