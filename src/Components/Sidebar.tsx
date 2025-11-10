@@ -17,11 +17,25 @@ const API_KEY = import.meta.env.VITE_API_KEY;
 function Sidebar({
   filter,
   setFilter,
+  setCategoryId,
 }: {
   filter: string;
   setFilter: (filter: string) => void;
+  setCategoryId: (categoryId: string | null) => void;
 }) {
   const [categoriesData, setCategoriesData] = useState<any[]>([]);
+
+  const fetchAndSetCategories = async () => {
+    const response = await axios.get(
+      `https://www.googleapis.com/youtube/v3/videoCategories?key=${API_KEY}&part=snippet&regionCode=us`
+    );
+    // console.log(response.data);
+    setCategoriesData(response.data.items);
+  };
+
+  useEffect(() => {
+    fetchAndSetCategories();
+  }, []);
 
   const mainLinks = [
     {
@@ -37,14 +51,17 @@ function Sidebar({
       icon: <MdMusicNote className='text-xl' />,
       name: 'Music',
       filterTag: 'music',
-      categoryId: null,
+      categoryId: categoriesData.find(
+        (item: { snippet: { title: string } }) => item.snippet.title === 'Music'
+      )?.id,
     },
     {
       icon: <MdOutlineSportsFootball className='text-xl' />,
       name: 'Sports',
       filterTag: 'sports',
       categoryId: categoriesData.find(
-        (item: { snippet: { title: string } }) => item.snippet.title === 'Music'
+        (item: { snippet: { title: string } }) =>
+          item.snippet.title === 'Sports'
       )?.id,
     },
     {
@@ -94,20 +111,9 @@ function Sidebar({
     },
   ];
 
-  const fetchAndSetCategories = async () => {
-    const response = await axios.get(
-      `https://www.googleapis.com/youtube/v3/videoCategories?key=${API_KEY}&part=snippet&regionCode=us`
-    );
-    // console.log(response.data);
-    setCategoriesData(response.data);
-  };
-
-  useEffect(() => {
-    fetchAndSetCategories();
-  }, []);
-
-  const toggleFilter = (filterTag: string, categoryId: string) => {
+  const toggleFilter = (filterTag: string, categoryId: string | null) => {
     setFilter(filterTag);
+    setCategoryId(categoryId);
   };
 
   return (
@@ -138,7 +144,7 @@ function Sidebar({
             className={`pl-6 py-3 hover:bg-neutral-800 ${
               filter == filterTag ? 'bg-neutral-800' : ''
             }`}
-            onClick={() => toggleFilter(filterTag)}
+            onClick={() => toggleFilter(filterTag, categoryId)}
           >
             <h1 className='flex items-center gap-5'>
               {icon}
@@ -154,7 +160,7 @@ function Sidebar({
             className={`pl-6 py-3 hover:bg-neutral-800 ${
               filter == filterTag ? 'bg-neutral-800' : ''
             }`}
-            onClick={() => toggleFilter(filterTag)}
+            onClick={() => toggleFilter(filterTag, categoryId)}
           >
             <h1 className='flex items-center gap-5'>
               {icon}
