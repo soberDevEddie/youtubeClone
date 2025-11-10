@@ -51,7 +51,7 @@ function Home() {
       ...video,
       channelInfo: {
         ...video.channelInfo,
-        image: channelData[video.channelInfo.id]
+        image: channelData[video.channelInfo.id],
       },
     }));
 
