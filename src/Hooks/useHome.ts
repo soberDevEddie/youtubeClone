@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-import type { HomeVideoCardType } from '../utils/Types';
+import type { HomeVideoCardType } from '../Utils/Types';
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 
@@ -10,12 +10,7 @@ export const useHome = () => {
     videos: HomeVideoCardType[];
     nextPageToken: string | null;
   }
-
-  // {
-  //   home: {videos: [] ,nextPageToken: null}
-  //   music: {videos: [] ,nextPageToken: null}
-  //   movies: {videos: [] ,nextPageToken: null}
-  // }
+  
 
   const [homeVideos, setHomeVideos] = useState<
     Record<string, HomeHookPropType>
@@ -30,6 +25,8 @@ export const useHome = () => {
     education: { videos: [], nextPageToken: null },
   });
 
+  const [error, setError] = useState<string | null>(null)
+
   const fetchHomeVideos = async (
     filter: string,
     categoryId: string | null,
@@ -41,7 +38,7 @@ export const useHome = () => {
           categoryId != null ? `videoCategoryId=${categoryId}` : ``
         }&${pageToken != null ? `pageToken=${pageToken}` : ``}&maxResults=20`
       );
-      // console.log(response.data);
+      setError(null)
 
       const videoData = response.data.items.map((item: any) => {
         return {
@@ -81,13 +78,6 @@ export const useHome = () => {
         },
       }));
 
-      // console.log(channelData);
-
-      // setHomeVideos((prev) => ({
-      //   videos: [...prev.videos, ...videos],
-      //   nextPageToken: response.data.nextPageToken,
-      // }));
-
       setHomeVideos((prev) => ({
         ...prev,
         [filter]: {
@@ -97,8 +87,9 @@ export const useHome = () => {
       }));
     } catch (error) {
       console.error(`Error fetching ${filter} videos:`, error);
+      setError(`Error fetching the ${filter} videos, fetch again later.`)
     }
   };
 
-  return { homeVideos, fetchHomeVideos };
+  return { homeVideos, fetchHomeVideos, error };
 };

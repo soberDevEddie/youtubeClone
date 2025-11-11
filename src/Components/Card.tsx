@@ -1,4 +1,4 @@
-import type { HomeVideoCardType } from '../utils/Types';
+import type { HomeVideoCardType } from '../Utils/Types';
 
 function Card({ data }: { data: HomeVideoCardType }) {
   return (
