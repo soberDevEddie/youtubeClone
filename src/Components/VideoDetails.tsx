@@ -5,7 +5,7 @@ function VideoDetails() {
   const [showDescription, setShowDescription] = useState(false);
 
   return (
-    <div className='flex flex-col mb-12'>
+    <div className='flex flex-col'>
       {/* Video Title */}
       <h1 className='text-xl font-semibold mb-2'>Video Title</h1>
 

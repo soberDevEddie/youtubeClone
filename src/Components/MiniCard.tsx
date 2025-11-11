@@ -1,8 +1,8 @@
 function MiniCard() {
   return (
     <div className='flex gap-3'>
-      <div className="relative">
-        <span className="absolute bottom-1 right-1 bg-[#0c0c0cd0]">duration</span>
+      <div className="relative h-22">
+        <span className="absolute bottom-1 right-1 bg-[#0c0c0cd0] px-2 py-0.5 rounded">duration</span>
         <div className='bg-red-200 w-40 aspect-[16/9] rounded'></div>
       </div>
       <div className=''>
