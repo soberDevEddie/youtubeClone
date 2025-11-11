@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   MdHome,
   MdMusicNote,
@@ -23,6 +24,9 @@ function Sidebar({
   setFilter: (filter: string) => void;
   setCategoryId: (categoryId: string | null) => void;
 }) {
+
+  const navigate = useNavigate()
+
   const [categoriesData, setCategoriesData] = useState<any[]>([]);
 
   const fetchAndSetCategories = async () => {
@@ -127,12 +131,13 @@ function Sidebar({
           data-bs-toggle='offcanvas'
           href='#offcanvasExample'
           role='button'
-          aria-controls='offcanvasExample'
-        >
+          aria-controls='offcanvasExample'>
           <GiHamburgerMenu className='text-xl' />
         </a>
 
-        <div className='flex items-center gap-1'>
+        <div className='flex items-center gap-1'
+        onClick={() => navigate('/')}
+        >
           <FaYoutube className='text-3xl text-red-600' />
           <span className='text-xl'>YouTube</span>
         </div>
@@ -144,7 +149,7 @@ function Sidebar({
             className={`pl-6 py-3 hover:bg-neutral-800 ${
               filter == filterTag ? 'bg-neutral-800' : ''
             }`}
-            onClick={() => toggleFilter(filterTag, categoryId)}
+            onClick={() => {toggleFilter(filterTag, categoryId); navigate('/')}}
           >
             <h1 className='flex items-center gap-5'>
               {icon}

@@ -1,14 +1,17 @@
 import { useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 import Navbar from './Components/Navbar';
 import Sidebar from './Components/Sidebar';
 import Home from './Pages/Home';
+import Watch from './Pages/Watch';
 
 function App() {
   const [filter, setFilter] = useState('home');
   const [categoryId, setCategoryId] = useState<string | null>(null);
 
   return (
-    <div>
+    <BrowserRouter>
       <div
         className='offcanvas offcanvas-start'
         id='offcanvasExample'
@@ -21,8 +24,15 @@ function App() {
         />
       </div>
       <Navbar />
-      <Home filter={filter} categoryId={categoryId} />
-    </div>
+
+      <Routes>
+        <Route
+          path='/'
+          element={<Home filter={filter} categoryId={categoryId} />}
+        />
+        <Route path='/watch' element={<Watch/>} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
