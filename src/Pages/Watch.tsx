@@ -62,7 +62,17 @@ function Watch() {
       );
 
       // console.log(`Activies`, response);
-      console.log(`Ids`, videoIds);
+      // console.log(`Ids`, videoIds);
+
+      const vidReponse = await axios.get(
+        `https://www.googleapis.com/youtube/v3/videos?key=${API_KEY}&part=snippet,contentDetails,statistics&id=${videoIds}`
+      );
+
+      // console.log(`Videos Reponse`, vidReponse);
+
+      const videosArray = await fetchVideosWithChannels(vidReponse.data.items);
+
+      console.log('Video Array', videosArray);
     } catch (error) {}
   };
 
