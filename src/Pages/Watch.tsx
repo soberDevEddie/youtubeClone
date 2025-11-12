@@ -45,7 +45,14 @@ function Watch() {
       <div className='row'>
         {/* Col 1 */}
         <div className='col-8'>
-          <div className='w-full aspect-[16/9] bg-red-400'></div>
+          {/* <div className='w-full aspect-[16/9] bg-red-400'></div> */}
+          <iframe
+            className='w-full aspect-[16/9]'
+            src={`https://www.youtube.com/embed/${details?.videoId}?autoplay=1`}
+            title='Youtube Video Player'
+            allow='autoplay; picture-inpicture;'
+            allowFullScreen
+          ></iframe>
           <VideoDetails details={details} />
         </div>
         {/* Col 2 */}

@@ -15,10 +15,19 @@ function VideoDetails({ details }: { details?: HomeVideoCardType }) {
       <div className='flex items-center justify-between'>
         {/* Channel info */}
         <div className='flex items-center gap-3'>
-          <div className='w-10 h-10 rounded-full bg-pink-300'></div>
+          {/* <div className='w-10 h-10 rounded-full bg-pink-300'></div> */}
+          <img
+            src={details?.channelInfo.image}
+            className='w-10 h-10 rounded-full object-cover'
+            alt=''
+          />
           <div className='flex flex-col'>
-            <h2 className='text-base font-semibold'>{details?.channelInfo.name}</h2>
-            <p className='text-sm text-gray-400'>Sub Count</p>
+            <h2 className='text-base font-semibold'>
+              {details?.channelInfo.name}
+            </h2>
+            <p className='text-sm text-gray-400'>
+              {details?.channelInfo.subCount}
+            </p>
           </div>
         </div>
 
@@ -26,25 +35,24 @@ function VideoDetails({ details }: { details?: HomeVideoCardType }) {
         <div className='flex items-center gap-2 cursor-pointer'>
           <div className='flex items-center bg-neutral-800 rounded-full px-3 py-1 gap-2'>
             <FaThumbsUp className='text-sm' />
-            <span className='text-sm'>Video Likes</span>
+            <span className='text-md'>{details?.videoLikes}</span>
           </div>
 
           <div className='flex items-center bg-neutral-800 rounded-full px-3 py-1 gap-2'>
             <FaShareSquare className='text-sm' />
-            <span className='text-sm'>share</span>
+            <span className='text-md'>share</span>
           </div>
         </div>
       </div>
       {/* Description */}
 
       <div className='text-lg bg-neutral-700 px-3 py-2 rounded-xl '>
-        <p className={`${showDescription ? '' : `line-clamp-3`}`}>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptas
-          fugit in vero quidem dolorem dignissimos totam! Excepturi iure
-          quisquam vel, voluptates possimus explicabo commodi adipisci
-          recusandae ipsa deleniti dolores autem voluptatibus ducimus temporibus
-          distinctio natus, sit, rerum dicta beatae harum. Mollitia repudiandae
-          recusandae a. Impedit modi sapiente atque deleniti nobis!
+        <p
+          className={`whitespace-pre-line ${
+            showDescription ? '' : `line-clamp-3`
+          }`}
+        >
+          {details?.videoDescription}
         </p>
         {!showDescription ? (
           <button onClick={() => setShowDescription(true)}>...more</button>
