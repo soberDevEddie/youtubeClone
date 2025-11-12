@@ -10,9 +10,9 @@ import { fetchVideosWithChannels } from '../Utils/videoDetailsHelper';
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 function Watch() {
-  const { videoId } = useParams();
+  const { videoId, channelId } = useParams();
 
-  console.log(`Video ID, ${videoId}`);
+  // console.log(`Video ID, ${videoId}`);
 
   const [details, setDetails] = useState<HomeVideoCardType>();
 
@@ -22,7 +22,7 @@ function Watch() {
         `https://www.googleapis.com/youtube/v3/videos?key=${API_KEY}&part=snippet,contentDetails,statistics&id=${videoId}`
       );
 
-      console.log(`res`, response.data.items);
+      // console.log(`res`, response.data.items);
 
       const items = response.data.items;
 
@@ -32,12 +32,23 @@ function Watch() {
     } catch (error) {}
   };
 
+  const fetchActivities = async () => {
+    try {
+      const response = await axios.get(
+        `https://www.googleapis.com/youtube/v3/activities?key=${API_KEY}&part=snippet,contentDetails&channelId=${channelId}&maxResults=20`
+      );
+
+      console.log(`Activies`, response);
+    } catch (error) {}
+  };
+
   useEffect(() => {
-    console.log(`Details`, details);
+    // console.log(`Details`, details);
   }, [details]);
 
   useEffect(() => {
     fetchDetails();
+    fetchActivities();
   }, []);
 
   return (

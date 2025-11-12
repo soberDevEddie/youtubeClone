@@ -49,7 +49,7 @@ export const fetchVideosWithChannels = async (items: any[]) => {
     },
   }));
 
-  console.log(`check`, videos);
+  // console.log(`check`, videos);
 
   return videos;
 };

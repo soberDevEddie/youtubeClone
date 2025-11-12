@@ -8,7 +8,7 @@ function Card({ data }: { data: HomeVideoCardType }) {
       {/* thumbanail */}
       <div className='relative'>
         {/* <div className='bg-red-300 aspect-[16/9] rounded-xl'></div> */}
-        <Link to={`/watch/${data.videoId}`}>
+        <Link to={`/watch/${data.videoId}/${data.channelInfo.id}`}>
           <img
             src={data.videoThumbnail}
             className='aspect-[16/9] object-cover rounded-xl'
