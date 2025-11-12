@@ -38,7 +38,31 @@ function Watch() {
         `https://www.googleapis.com/youtube/v3/activities?key=${API_KEY}&part=snippet,contentDetails&channelId=${channelId}&maxResults=20`
       );
 
-      console.log(`Activies`, response);
+      const items = response.data.items;
+
+      const videoIds: string[] = [];
+
+      items.forEach(
+        (item: {
+          contentDetails: {
+            upload?: {
+              videoId: string;
+            };
+            playlistItem?: {
+              resourceId: { videoId: string };
+            };
+          };
+        }) => {
+          if (item.contentDetails.upload) {
+            videoIds.push(item.contentDetails.upload.videoId);
+          } else if (item.contentDetails.playlistItem?.resourceId.videoId) {
+            videoIds.push(item.contentDetails.playlistItem.resourceId.videoId);
+          }
+        }
+      );
+
+      // console.log(`Activies`, response);
+      console.log(`Ids`, videoIds);
     } catch (error) {}
   };
 
