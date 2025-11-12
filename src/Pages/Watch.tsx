@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import MiniCard from '../Components/MiniCard';
 import VideoDetails from '../Components/VideoDetails';
 import type { HomeVideoCardType } from '../Utils/Types';
+import { fetchVideosWithChannels } from '../Utils/videoDetailsHelper';
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 
@@ -25,34 +26,9 @@ function Watch() {
 
       const items = response.data.items;
 
-      const videoData = items.map((item: any) => ({
-        videoId: item.id,
-        videoTitle: item.snippet.title,
-        videoThumbnail: item.snippet.thumbnails.standard.url,
-        videoDuration: item.contentDetails.duration,
-        videoViews: item.statistics.viewCount,
-        videoAge: item.snippet.publishedAt,
-        channelInfo: {
-          id: item.snippet.channelId,
-          name: item.snippet.channelTitle,
-        },
-      }));
+      const videoDetails = await fetchVideosWithChannels(items);
 
-      setDetails(videoData[0]);
-      // const item = response.data.items[0];
-
-      // setDetails({
-      //   videoId: item.id,
-      //   videoTitle: item.snippet.title,
-      //   videoThumbnail: item.snippet.thumbnails.standard.url,
-      //   videoDuration: item.contentDetails.duration,
-      //   videoViews: item.statistics.viewCount,
-      //   videoAge: item.snippet.publishedAt,
-      //   channelInfo: {
-      //     id: item.snippet.channelId,
-      //     name: item.snippet.channelTitle,
-      //   },
-      // });
+      setDetails(videoDetails[0]);
     } catch (error) {}
   };
 
@@ -70,7 +46,7 @@ function Watch() {
         {/* Col 1 */}
         <div className='col-8'>
           <div className='w-full aspect-[16/9] bg-red-400'></div>
-          <VideoDetails />
+          <VideoDetails details={details} />
         </div>
         {/* Col 2 */}
         <div className='col-4 flex flex-col gap-3'>

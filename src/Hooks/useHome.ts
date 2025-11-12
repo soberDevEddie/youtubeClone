@@ -38,6 +38,8 @@ export const useHome = () => {
           categoryId != null ? `videoCategoryId=${categoryId}` : ``
         }&${pageToken != null ? `pageToken=${pageToken}` : ``}&maxResults=20`
       );
+    // console.log(response.data);
+    
 
       setError(null);
 

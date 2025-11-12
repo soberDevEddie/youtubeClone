@@ -9,9 +9,11 @@ export const fetchVideosWithChannels = async (items: any[]) => {
     return {
       videoId: item.id,
       videoTitle: item.snippet.title,
+      videoDescription: item.snippet.description,
       videoThumbnail: item.snippet.thumbnails.standard.url,
       videoDuration: item.contentDetails.duration,
       videoViews: item.statistics.viewCount,
+      videoLikes: item.statistics.likeCount,
       videoAge: item.snippet.publishedAt,
       channelInfo: {
         id: item.snippet.channelId,
@@ -25,22 +27,29 @@ export const fetchVideosWithChannels = async (items: any[]) => {
     .join(',');
 
   const channelResponse = await axios.get(
-    `https://www.googleapis.com/youtube/v3/channels?key=${API_KEY}&part=snippet&id=${channelIds}`
+    `https://www.googleapis.com/youtube/v3/channels?key=${API_KEY}&part=snippet,statistics&id=${channelIds}`
   );
 
-  const channelData: { [key: string]: string } = {};
+  const channelData: { [key: string]: { image: string; subCount: string } } =
+    {};
 
   channelResponse.data.items.forEach((channel: any) => {
-    channelData[channel.id] = channel.snippet.thumbnails.default.url;
+    channelData[channel.id] = {
+      image: channel.snippet.thumbnails.default.url,
+      subCount: channel.statistics.subscriberCount,
+    };
   });
 
   const videos = videoData.map((video: HomeVideoCardType) => ({
     ...video,
     channelInfo: {
       ...video.channelInfo,
-      image: channelData[video.channelInfo.id],
+      image: channelData[video.channelInfo.id].image,
+      subCount: channelData[video.channelInfo.id].subCount,
     },
   }));
+
+  console.log(`check`, videos);
 
   return videos;
 };

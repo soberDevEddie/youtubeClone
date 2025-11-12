@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { FaThumbsUp, FaShareSquare } from 'react-icons/fa';
 
-function VideoDetails() {
+import type { HomeVideoCardType } from '../Utils/Types';
+
+function VideoDetails({ details }: { details?: HomeVideoCardType }) {
   const [showDescription, setShowDescription] = useState(false);
 
   return (
     <div className='flex flex-col'>
       {/* Video Title */}
-      <h1 className='text-xl font-semibold mb-2'>Video Title</h1>
+      <h1 className='text-xl font-semibold mb-2'>{details?.videoTitle}</h1>
 
       {/* Channel Section */}
       <div className='flex items-center justify-between'>
@@ -15,7 +17,7 @@ function VideoDetails() {
         <div className='flex items-center gap-3'>
           <div className='w-10 h-10 rounded-full bg-pink-300'></div>
           <div className='flex flex-col'>
-            <h2 className='text-base font-semibold'>Channel Name</h2>
+            <h2 className='text-base font-semibold'>{details?.channelInfo.name}</h2>
             <p className='text-sm text-gray-400'>Sub Count</p>
           </div>
         </div>
@@ -44,9 +46,11 @@ function VideoDetails() {
           distinctio natus, sit, rerum dicta beatae harum. Mollitia repudiandae
           recusandae a. Impedit modi sapiente atque deleniti nobis!
         </p>
-        {!showDescription ? <button onClick={() => setShowDescription(true)}>...more</button> : 
-        <button onClick={() => setShowDescription(false)}>...less</button>
-        }
+        {!showDescription ? (
+          <button onClick={() => setShowDescription(true)}>...more</button>
+        ) : (
+          <button onClick={() => setShowDescription(false)}>...less</button>
+        )}
       </div>
     </div>
   );
