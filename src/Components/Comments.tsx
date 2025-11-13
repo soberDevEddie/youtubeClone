@@ -27,7 +27,7 @@ function Comments({ videoId }: { videoId?: string }) {
             : ``
         }`
       );
-      console.log(`Comments Response`, commentsReponse.data);
+      // console.log(`Comments Response`, commentsReponse.data);
       const items = commentsReponse.data.items;
 
       const commentsData = items.map((comment: any) => ({
@@ -39,9 +39,10 @@ function Comments({ videoId }: { videoId?: string }) {
         authorName: comment.snippet.topLevelComment.snippet.authorDisplayName,
         commentText: comment.snippet.topLevelComment.snippet.textOriginal,
         commentLikes: comment.snippet.topLevelComment.snippet.likeCount,
+        commentRepliesCount: comment.snippet.totalReplyCount,
       }));
 
-      console.log(commentsData);
+      // console.log(commentsData);
 
       setCommentsList((prev) => ({
         comments: [...prev.comments, ...commentsData],
@@ -60,11 +61,14 @@ function Comments({ videoId }: { videoId?: string }) {
     <div className='flex mt-3 gap-2 flex-col'>
       <h3 className='font-semibold px-4'>Comments</h3>
       {commentsList.comments?.map((comment: any) => (
-        <CommentCard comment={comment}/>
+        <CommentCard comment={comment} />
       ))}
-      <button className='text-gray-400 hover:underline '
-      onClick={() => fetchComments()}
-      >Show more...</button>
+      <button
+        className='text-gray-400 hover:underline '
+        onClick={() => fetchComments()}
+      >
+        Show more...
+      </button>
     </div>
   );
 }

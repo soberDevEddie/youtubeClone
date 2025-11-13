@@ -15,6 +15,7 @@ export interface HomeVideoCardType {
   };
 }
 
+
 export interface CommentBodyType {
   commentId: string;
   authorChannelId: string;
@@ -22,4 +23,5 @@ export interface CommentBodyType {
   authorName: string;
   commentText: string;
   commentLikes: string;
+  commentRepliesCount?: string
 }
