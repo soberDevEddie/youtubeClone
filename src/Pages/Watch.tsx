@@ -11,6 +11,7 @@ const API_KEY = import.meta.env.VITE_API_KEY;
 
 function Watch() {
   const { videoId, channelId } = useParams();
+  const [activities, setActivities] = useState<HomeVideoCardType[]>();
 
   // console.log(`Video ID, ${videoId}`);
 
@@ -72,7 +73,9 @@ function Watch() {
 
       const videosArray = await fetchVideosWithChannels(vidReponse.data.items);
 
-      console.log('Video Array', videosArray);
+      // console.log('Video Array', videosArray);
+
+      setActivities(videosArray);
     } catch (error) {}
   };
 
@@ -102,8 +105,8 @@ function Watch() {
         </div>
         {/* Col 2 */}
         <div className='col-4 flex flex-col gap-3'>
-          {[...Array(12)].map((item, ind) => (
-            <MiniCard key={ind} />
+          {activities?.map((item, ind) => (
+            <MiniCard key={ind} item={item} />
           ))}
         </div>
       </div>
