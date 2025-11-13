@@ -14,3 +14,12 @@ export interface HomeVideoCardType {
     subCount?: string;
   };
 }
+
+export interface CommentBodyType {
+  commentId: string;
+  authorChannelId: string;
+  authorProfile: string;
+  authorName: string;
+  commentText: string;
+  commentLikes: string;
+}
