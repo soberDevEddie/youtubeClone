@@ -9,7 +9,7 @@ function VideoDetails({ details }: { details?: HomeVideoCardType }) {
   return (
     <div className='flex flex-col'>
       {/* Video Title */}
-      <h1 className='text-xl font-semibold mb-2'>{details?.videoTitle}</h1>
+      <h2 className='text-xl font-semibold mb-2'>{details?.videoTitle}</h2>
 
       {/* Channel Section */}
       <div className='flex items-center justify-between'>
@@ -22,9 +22,9 @@ function VideoDetails({ details }: { details?: HomeVideoCardType }) {
             alt=''
           />
           <div className='flex flex-col'>
-            <h2 className='text-base font-semibold'>
+            <h3 className='text-base font-semibold'>
               {details?.channelInfo.name}
-            </h2>
+            </h3>
             <p className='text-sm text-gray-400'>
               {details?.channelInfo.subCount}
             </p>

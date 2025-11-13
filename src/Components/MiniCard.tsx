@@ -15,7 +15,7 @@ function MiniCard({ item }: { item: HomeVideoCardType }) {
         />
       </div>
       <div className=''>
-        <h3 className=''>{item.videoTitle}</h3>
+        <h4 className=''>{item.videoTitle}</h4>
         <div className='text-sm text-gray-400'>
           <h3>{item.channelInfo.name}</h3>
           <div className='flex gap-1 items-center'>

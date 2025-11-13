@@ -6,6 +6,7 @@ import MiniCard from '../Components/MiniCard';
 import VideoDetails from '../Components/VideoDetails';
 import type { HomeVideoCardType } from '../Utils/Types';
 import { fetchVideosWithChannels } from '../Utils/videoDetailsHelper';
+import Comments from '../Components/Comments';
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 
@@ -102,6 +103,7 @@ function Watch() {
             allowFullScreen
           ></iframe>
           <VideoDetails details={details} />
+          <Comments/>
         </div>
         {/* Col 2 */}
         <div className='col-4 flex flex-col gap-3'>
