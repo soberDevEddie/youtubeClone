@@ -54,14 +54,16 @@ function Comments({ videoId }: { videoId?: string }) {
   };
 
   useEffect(() => {
-    fetchComments();
+    if (videoId) {
+      fetchComments();
+    }
   }, [videoId]);
 
   return (
     <div className='flex mt-3 gap-2 flex-col'>
       <h3 className='font-semibold px-4'>Comments</h3>
-      {commentsList.comments?.map((comment: any) => (
-        <CommentCard comment={comment} />
+      {commentsList.comments?.map((comment: any, ind) => (
+        <CommentCard key={ind} comment={comment} />
       ))}
       <button
         className='text-gray-400 hover:underline '

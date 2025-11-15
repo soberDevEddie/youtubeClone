@@ -41,8 +41,10 @@ function CommentCard({ comment }: { comment: CommentBodyType }) {
     <div className='flex flex-col gap-2'>
       <CommentBody item={comment} />
       <div className='px-14 '>
-        {replies?.map((item:any) => (
-          <CommentBody item={item} />
+        {replies?.map((item: any, ind) => (
+          <div className='bg-neutral-600 '>
+            <CommentBody key={ind} item={item} />
+          </div>
         ))}
       </div>
     </div>

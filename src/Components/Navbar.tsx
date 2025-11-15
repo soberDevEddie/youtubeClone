@@ -8,8 +8,8 @@ function Navbar() {
 
   
   return (
-    <div className='w-full bg-[#0c0c0c]'>
-      <div className='flex justify-between w-[95%] mx-auto h-14'>
+    <div className='w-full bg-[#0c0c0c] sticky-top'>
+      <div className='flex justify-between w-[95%] mx-auto h-14 '>
         <div className='flex items-center gap-8'>
           <a
             className='btn'
@@ -21,7 +21,7 @@ function Navbar() {
             <GiHamburgerMenu className='text-xl' />
           </a>
 
-          <div className='flex items-center gap-1'
+          <div className='flex items-center gap-1 hover:cursor-pointer'
         onClick={() => navigate('/')}
         >
           <FaYoutube className='text-3xl text-red-600' />

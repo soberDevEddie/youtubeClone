@@ -10,7 +10,9 @@ export const fetchVideosWithChannels = async (items: any[]) => {
       videoId: item.id,
       videoTitle: item.snippet.title,
       videoDescription: item.snippet.description,
-      videoThumbnail: item.snippet.thumbnails.standard.url,
+      videoThumbnail:
+        item.snippet.thumbnails.standard?.url ||
+        item.snippet.thumbnails.default?.url,
       videoDuration: item.contentDetails.duration,
       videoViews: item.statistics.viewCount,
       videoLikes: item.statistics.likeCount,

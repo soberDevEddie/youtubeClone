@@ -103,7 +103,7 @@ function Watch() {
             allowFullScreen
           ></iframe>
           <VideoDetails details={details} />
-          <Comments videoId={details?.videoId}/>
+          <Comments videoId={details?.videoId} />
         </div>
         {/* Col 2 */}
         <div className='col-4 flex flex-col gap-3'>

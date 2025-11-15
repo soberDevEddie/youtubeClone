@@ -10,8 +10,9 @@ function Card({ data }: { data: HomeVideoCardType }) {
         {/* <div className='bg-red-300 aspect-[16/9] rounded-xl'></div> */}
         <Link to={`/watch/${data.videoId}/${data.channelInfo.id}`}>
           <img
+          onClick={}
             src={data.videoThumbnail}
-            className='aspect-[16/9] object-cover rounded-xl'
+            className='aspect-[16/9] object-cover rounded-xl w-full'
           />
         </Link>
         <span className='absolute bottom-3 right-3 bg-[#0c0c0cd0] px-2 py-0.5 text-sm rounded'>
