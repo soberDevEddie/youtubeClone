@@ -25,3 +25,13 @@ export interface CommentBodyType {
   commentLikes: string;
   commentRepliesCount?: string
 }
+
+export interface ChannelInfoType {
+  id: string;
+  thumbnail: string;
+  title: string;
+  customUrl: string; 
+  description: string;
+  subCount: string;
+  videoCount: string
+}
