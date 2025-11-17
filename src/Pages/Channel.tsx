@@ -1,44 +1,14 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import type { ChannelInfoType } from '../Utils/Types';
 
-const API_KEY = import.meta.env.VITE_API_KEY;
+import { useChannel } from '../Hooks/useChannel';
 
 function Channel() {
   const { channelId } = useParams();
-
-  const [channelInfo, setChannelInfo] = useState<ChannelInfoType | null>(null);
-
-  const fetchChannelInfo = async () => {
-    try {
-      const channelInfoResponse = await axios.get(
-        `https://www.googleapis.com/youtube/v3/channels?key=${API_KEY}&part=snippet,contentDetails,statistics&id=${channelId}`
-      );
-
-      // console.log(channelInfoResponse);
-
-      const items = channelInfoResponse.data.items;
-      // console.log(items);
-
-      const channelInfoData = items.map((item: any) => ({
-        id: items.id,
-        thumbnail: item.snippet.thumbnails.high.url,
-        title: item.snippet.title,
-        customUrl: item.snippet.customUrl,
-        description: item.snippet.description,
-        subCount: item.statistics.subscriberCount,
-        videoCount: item.statistics.videoCount,
-      }));
-
-      // console.log(channelInfoData);
-
-      setChannelInfo(channelInfoData[0]);
-    } catch (error) {}
-  };
+  const { channelInfo, fetchChannelInfo } = useChannel();
 
   useEffect(() => {
-    fetchChannelInfo();
+    fetchChannelInfo(channelId!);
   }, []);
 
   return (
@@ -47,7 +17,11 @@ function Channel() {
         {/* image */}
         <div className='col-4'>
           {/* <div className='w-52 aspect-square rounded-full bg-red-300 mx-auto'></div> */}
-          <img className='w-52 aspect-square rounded-full mx-auto object-cover' src={channelInfo?.thumbnail} alt="" />
+          <img
+            className='w-52 aspect-square rounded-full mx-auto object-cover'
+            src={channelInfo?.thumbnail}
+            alt=''
+          />
         </div>
         {/* details */}
         <div className='col-8'>
