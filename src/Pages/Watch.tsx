@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 import MiniCard from '../Components/MiniCard';
@@ -7,8 +6,12 @@ import VideoDetails from '../Components/VideoDetails';
 import type { HomeVideoCardType } from '../Utils/Types';
 import { fetchVideosWithChannels } from '../Utils/videoDetailsHelper';
 import Comments from '../Components/Comments';
+import {
+  getActivities,
+  getActivitiesVideos,
+  getVideoDetails,
+} from '../Utils/api';
 
-const API_KEY = import.meta.env.VITE_API_KEY;
 
 function Watch() {
   const { videoId, channelId } = useParams();
@@ -20,15 +23,11 @@ function Watch() {
 
   const fetchDetails = async () => {
     try {
-      const response = await axios.get(
-        `https://www.googleapis.com/youtube/v3/videos?key=${API_KEY}&part=snippet,contentDetails,statistics&id=${videoId}`
-      );
+      const res = await getVideoDetails(videoId!);
 
-      // console.log(`res`, response.data.items);
+      // console.log(`res`, res.data.items);
 
-      const items = response.data.items;
-
-      const videoDetails = await fetchVideosWithChannels(items);
+      const videoDetails = await fetchVideosWithChannels(res);
 
       setDetails(videoDetails[0]);
     } catch (error) {}
@@ -36,15 +35,11 @@ function Watch() {
 
   const fetchActivities = async () => {
     try {
-      const response = await axios.get(
-        `https://www.googleapis.com/youtube/v3/activities?key=${API_KEY}&part=snippet,contentDetails&channelId=${channelId}&maxResults=20`
-      );
-
-      const items = response.data.items;
+      const res = await getActivities(channelId!);
 
       const videoIds: string[] = [];
 
-      items.forEach(
+      res.forEach(
         (item: {
           contentDetails: {
             upload?: {
@@ -66,13 +61,11 @@ function Watch() {
       // console.log(`Activies`, response);
       // console.log(`Ids`, videoIds);
 
-      const vidReponse = await axios.get(
-        `https://www.googleapis.com/youtube/v3/videos?key=${API_KEY}&part=snippet,contentDetails,statistics&id=${videoIds}`
-      );
+      const vidReponse = await getActivitiesVideos(videoIds!);
 
       // console.log(`Videos Reponse`, vidReponse);
 
-      const videosArray = await fetchVideosWithChannels(vidReponse.data.items);
+      const videosArray = await fetchVideosWithChannels(vidReponse.items);
 
       // console.log('Video Array', videosArray);
 
