@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import axios from 'axios';
 
 import type { HomeVideoCardType } from '../Utils/Types';
 import { fetchVideosWithChannels } from '../Utils/videoDetailsHelper';
+import { getHomeVideos } from '../Utils/api';
 
-const API_KEY = import.meta.env.VITE_API_KEY;
 
 export const useHome = () => {
   interface HomeHookPropType {
@@ -33,24 +32,18 @@ export const useHome = () => {
     pageToken: string | null
   ) => {
     try {
-      const response = await axios.get(
-        `https://www.googleapis.com/youtube/v3/videos?key=${API_KEY}&part=snippet,statistics,contentDetails&chart=mostPopular&${
-          categoryId != null ? `videoCategoryId=${categoryId}` : ``
-        }&${pageToken != null ? `pageToken=${pageToken}` : ``}&maxResults=20`
-      );
+      const response = await getHomeVideos(categoryId!, pageToken!);
 
       setError(null);
 
-      const videos = await fetchVideosWithChannels(response.data.items);
+      const videos = await fetchVideosWithChannels(response.items);
 
-      console.log(videos);
-      // console.log(channelResponse);
 
       setHomeVideos((prev) => ({
         ...prev,
         [filter]: {
           videos: [...prev[filter].videos, ...videos],
-          nextPageToken: response.data.nextPageToken,
+          nextPageToken: response.nextPageToken,
         },
       }));
     } catch (error) {
