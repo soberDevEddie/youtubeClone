@@ -74,7 +74,7 @@ export const getChannelPlaylists = async (
   channelId: string,
   pageToken?: string
 ) => {
-  const url = `${BASE_URL}/playlists?key=${API_KEY}&part=snippet,contentDetails&id=${channelId}${
+  const url = `${BASE_URL}/playlists?key=${API_KEY}&part=snippet,contentDetails&channelId=${channelId}${
     pageToken ? `&pageToken=${pageToken}` : ''
   }&maxResults=8`;
 
