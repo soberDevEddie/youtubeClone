@@ -1,4 +1,4 @@
-function ChannelVideoCards() {
+function ChannelVideoCards({item}: {item: HomeVideoCardType}) {
   return (
     <div className='col flex flex-col'>
       {/* Thumbnail */}
