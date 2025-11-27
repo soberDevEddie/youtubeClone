@@ -15,18 +15,21 @@ function Channel() {
 
   return (
     <div className='relative'>
-      {showDescription &&
-        channelInfo?.description && (
-          <div className='absolute flex flex-col items-end gap-2 bg-neutral-800 rounded-xl w-[600px] px-8 py-8 left-1/2 top-1/2 transform -translate-x-1/2 z-10'>
-            <GrClose
-              className='text-2xl text-neutral-200'
-              onClick={() => setShowDescription(false)}
-            />
+      {showDescription && channelInfo?.description && (
+        <div className='absolute overflow-hidden left-1/2 top-1/2 transform -translate-x-1/2 z-10 bg-neutral-800 rounded-xl'>
+          <div className='flex flex-col items-end gap-2  w-[600px] max-h-[500px] overflow-y-auto px-8 py-8 overflow-y-auto'>
+            <div className=''>
+              <GrClose
+                className='text-2xl text-neutral-200'
+                onClick={() => setShowDescription(false)}
+              />
+            </div>
             <p className='text-lg whitespace-pre-line'>
               {channelInfo?.description}
             </p>
           </div>
-        )}
+        </div>
+      )}
 
       <div className='w-[95%] mx-auto mt-8'>
         <div className='row row-cols-2'>
