@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import type { ChannelInfoType } from '../Utils/Types';
-import { getChannelInfo } from '../Utils/api';
+import { getActivities, getChannelInfo } from '../Utils/api';
 
 export const useChannel = () => {
   const [channelInfo, setChannelInfo] = useState<ChannelInfoType | null>(null);
@@ -28,5 +28,12 @@ export const useChannel = () => {
     }
   };
 
-  return { channelInfo, fetchChannelInfo };
+  const fetchChannelData = async (channelId: string) => {
+    const channelVideosReponse = await getActivities(channelId);
+
+    console.log(channelVideosReponse);
+    
+  };
+
+  return { channelInfo, fetchChannelInfo, fetchChannelData };
 };

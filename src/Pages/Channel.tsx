@@ -3,26 +3,30 @@ import { useParams } from 'react-router-dom';
 import { GrClose } from 'react-icons/gr';
 
 import { useChannel } from '../Hooks/useChannel';
+import ChannelVideosList from '../Components/ChannelVideosList';
+import { fetchVideosWithChannels } from '../Utils/videoDetailsHelper';
 
 function Channel() {
   const { channelId } = useParams();
-  const { channelInfo, fetchChannelInfo } = useChannel();
+  const { channelInfo, fetchChannelInfo, fetchChannelData } = useChannel();
   const [showDescription, setShowDescription] = useState(false);
-  const [category, setCategory] = useState('Videos');
+  const [category, setCategory] = useState('videos');
 
   useEffect(() => {
     fetchChannelInfo(channelId!);
+    fetchChannelData(channelId!);
   }, []);
 
   return (
-    <div className='relative'>
+    <div className='relative mb-12'>
+      {/* Modal */}
       {showDescription && channelInfo?.description && (
-        <div className='absolute overflow-hidden left-1/2 top-1/2 transform -translate-x-1/2 z-10 bg-neutral-800 rounded-xl'>
-          <div className='flex flex-col items-end gap-2  w-[600px] max-h-[500px] overflow-y-auto px-8 py-8 overflow-y-auto'>
+        <div className='z-[10] absolute overflow-hidden bg-neutral-800 rounded-xl left-1/2 top-14 transform -translate-x-1/2'>
+          <div className='flex flex-col gap-2 items-end w-[600px] max-h-[500px] p-8 overflow-y-auto'>
             <div className=''>
               <GrClose
-                className='text-2xl text-neutral-200'
                 onClick={() => setShowDescription(false)}
+                className='text-2xl text-neutral-200'
               />
             </div>
             <p className='text-lg whitespace-pre-line'>
@@ -85,8 +89,9 @@ function Channel() {
             Playlists
           </button>
           <hr />
-          {category}
         </div>
+
+        {category == 'videos' && <ChannelVideosList />}
       </div>
     </div>
   );
