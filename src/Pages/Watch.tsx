@@ -39,7 +39,7 @@ function Watch() {
 
       const videoIds: string[] = [];
 
-      res.forEach(
+      res.items.forEach(
         (item: {
           contentDetails: {
             upload?: {

@@ -8,11 +8,15 @@ import {
 } from '../Utils/api';
 import { fetchVideosWithChannels } from '../Utils/videoDetailsHelper';
 
+interface ChannelVideoListState {
+  videos: HomeVideoCardType[];
+  nextPageToken: string | null;
+}
+
 export const useChannel = () => {
   const [channelInfo, setChannelInfo] = useState<ChannelInfoType | null>(null);
-  const [channelVideosList, setChannelVideosList] = useState<
-    HomeVideoCardType[]
-  >([]);
+  const [channelVideosList, setChannelVideosList] =
+    useState<ChannelVideoListState>({ videos: [], nextPageToken: null });
 
   const fetchChannelInfo = async (channelId: string) => {
     try {
@@ -29,7 +33,6 @@ export const useChannel = () => {
       };
 
       // console.log(channelInfoData);
-
       setChannelInfo(channelInfoData);
     } catch (error) {
       console.error(error);
@@ -38,10 +41,11 @@ export const useChannel = () => {
 
   const fetchChannelData = async (channelId: string) => {
     const channelVideosReponse = await getActivities(channelId);
+    // console.log(`channelVideosreponse:`, channelVideosReponse);
 
     const videoIds: string[] = [];
 
-    channelVideosReponse.forEach(
+    channelVideosReponse.items.forEach(
       (item: {
         contentDetails: {
           upload?: {

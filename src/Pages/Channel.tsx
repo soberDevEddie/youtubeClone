@@ -18,6 +18,10 @@ function Channel() {
     fetchChannelData(channelId!);
   }, []);
 
+  const fetchMoreChannelVideos = async () => {
+    
+  }
+
   return (
     <div className='relative mb-12'>
       {/* Modal */}
@@ -95,6 +99,11 @@ function Channel() {
         {category == 'videos' && (
           <ChannelVideosList channelVideosList={channelVideosList!} />
         )}
+
+        <button
+        onClick={() => fetchMoreChannelVideos}
+        className='my-3 text-xl border p-2 rounded'>Show more</button>
+
       </div>
     </div>
   );
