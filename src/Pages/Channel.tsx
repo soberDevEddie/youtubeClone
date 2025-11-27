@@ -7,6 +7,7 @@ import ChannelVideosList from '../Components/ChannelVideosList';
 import { fetchVideosWithChannels } from '../Utils/videoDetailsHelper';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Loading from '../Components/Loading';
+import ChannelPlaylist from '../Components/ChannelPlaylist';
 
 function Channel() {
   const { channelId } = useParams();
@@ -104,8 +105,10 @@ function Channel() {
             <hr />
           </div>
 
-          {category == 'videos' && (
+          {category == 'videos' ? (
             <ChannelVideosList channelVideos={channelVideosList!.videos} />
+          ) : (
+            <ChannelPlaylist  />
           )}
         </div>
       </InfiniteScroll>
