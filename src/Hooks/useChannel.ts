@@ -39,8 +39,8 @@ export const useChannel = () => {
     }
   };
 
-  const fetchChannelData = async (channelId: string) => {
-    const channelVideosReponse = await getActivities(channelId);
+  const fetchChannelData = async (channelId: string, pageToken?: string) => {
+    const channelVideosReponse = await getActivities(channelId, pageToken);
     // console.log(`channelVideosreponse:`, channelVideosReponse);
 
     const videoIds: string[] = [];
@@ -67,12 +67,15 @@ export const useChannel = () => {
     const vidReponse = await getActivitiesVideos(videoIds!);
     const videosArray = await fetchVideosWithChannels(vidReponse.items);
 
-    setChannelVideosList(videosArray);
+    setChannelVideosList((prev) => ({
+      videos: [...prev.videos, ...videosArray],
+      nextPageToken: channelVideosReponse.nextPageToken || null,
+    }));
 
-    // console.log(
-    //   'You are using the useChannel hook to fetch videos reponse',
-    //   videosArray
-    // );
+    console.log(
+      'You are using the useChannel hook to fetch videos reponse',
+      videosArray
+    );
   };
 
   return { channelInfo, fetchChannelInfo, channelVideosList, fetchChannelData };

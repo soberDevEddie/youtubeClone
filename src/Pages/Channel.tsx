@@ -13,14 +13,14 @@ function Channel() {
   const [showDescription, setShowDescription] = useState(false);
   const [category, setCategory] = useState('videos');
 
+  const fetchMoreChannelVideos = async () => {
+    fetchChannelData(channelId!, channelVideosList!.nextPageToken!);
+  };
+
   useEffect(() => {
     fetchChannelInfo(channelId!);
     fetchChannelData(channelId!);
   }, []);
-
-  const fetchMoreChannelVideos = async () => {
-    
-  }
 
   return (
     <div className='relative mb-12'>
@@ -97,13 +97,15 @@ function Channel() {
         </div>
 
         {category == 'videos' && (
-          <ChannelVideosList channelVideosList={channelVideosList!} />
+          <ChannelVideosList channelVideos={channelVideosList!.videos} />
         )}
 
         <button
-        onClick={() => fetchMoreChannelVideos}
-        className='my-3 text-xl border p-2 rounded'>Show more</button>
-
+          onClick={() => fetchMoreChannelVideos()}
+          className='my-3 text-xl border p-2 rounded'
+        >
+          Show more
+        </button>
       </div>
     </div>
   );

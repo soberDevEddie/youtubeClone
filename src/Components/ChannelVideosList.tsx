@@ -2,14 +2,14 @@ import type { HomeVideoCardType } from '../Utils/Types';
 import ChannelVideoCards from './ChannelVideoCards';
 
 function ChannelVideosList({
-  channelVideosList,
+  channelVideos,
 }: {
-  channelVideosList: HomeVideoCardType[];
+  channelVideos: HomeVideoCardType[];
 }) {
   return (
     <div className='row row-cols-4 gap-y-4'>
-      {channelVideosList &&
-        channelVideosList.map((item: HomeVideoCardType, ind) => (
+      {channelVideos &&
+        channelVideos.map((item: HomeVideoCardType, ind) => (
           <ChannelVideoCards key={ind} item={item} />
         ))}
     </div>
