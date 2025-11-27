@@ -4,10 +4,11 @@ import { GrClose } from 'react-icons/gr';
 
 import { useChannel } from '../Hooks/useChannel';
 import ChannelVideosList from '../Components/ChannelVideosList';
-import { fetchVideosWithChannels } from '../Utils/videoDetailsHelper';
+// import { fetchVideosWithChannels } from '../Utils/videoDetailsHelper';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Loading from '../Components/Loading';
 import ChannelPlaylist from '../Components/ChannelPlaylist';
+import { getChannelPlaylists } from '../Utils/api';
 
 function Channel() {
   const { channelId } = useParams();
@@ -20,9 +21,15 @@ function Channel() {
     fetchChannelData(channelId!, channelVideosList!.nextPageToken!);
   };
 
+  const fetchChannelPlaylists = async () => {
+    const playlistsReponse = await getChannelPlaylists(channelId!);
+    console.log(`Playlist response`, playlistsReponse);
+  };
+
   useEffect(() => {
     fetchChannelInfo(channelId!);
     fetchChannelData(channelId!);
+    fetchChannelPlaylists();
   }, []);
 
   return (
@@ -108,7 +115,7 @@ function Channel() {
           {category == 'videos' ? (
             <ChannelVideosList channelVideos={channelVideosList!.videos} />
           ) : (
-            <ChannelPlaylist  />
+            <ChannelPlaylist />
           )}
         </div>
       </InfiniteScroll>

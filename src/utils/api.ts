@@ -69,3 +69,16 @@ export const getChannelInfo = async (
 
   return response.data.items;
 };
+
+export const getChannelPlaylists = async (
+  channelId: string,
+  pageToken?: string
+) => {
+  const url = `${BASE_URL}/playlists?key=${API_KEY}&part=snippet,contentDetails&id=${channelId}${
+    pageToken ? `&pageToken=${pageToken}` : ''
+  }&maxResults=8`;
+
+  const response = await axios.get(url);
+
+  return response;
+};
