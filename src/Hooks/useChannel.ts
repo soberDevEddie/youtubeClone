@@ -1,10 +1,18 @@
 import { useState } from 'react';
 
-import type { ChannelInfoType } from '../Utils/Types';
-import { getActivities, getChannelInfo } from '../Utils/api';
+import type { ChannelInfoType, HomeVideoCardType } from '../Utils/Types';
+import {
+  getActivities,
+  getChannelInfo,
+  getActivitiesVideos,
+} from '../Utils/api';
+import { fetchVideosWithChannels } from '../Utils/videoDetailsHelper';
 
 export const useChannel = () => {
   const [channelInfo, setChannelInfo] = useState<ChannelInfoType | null>(null);
+  const [channelVideosList, setChannelVideosList] = useState<
+    HomeVideoCardType[]
+  >([]);
 
   const fetchChannelInfo = async (channelId: string) => {
     try {
@@ -31,9 +39,37 @@ export const useChannel = () => {
   const fetchChannelData = async (channelId: string) => {
     const channelVideosReponse = await getActivities(channelId);
 
-    console.log(channelVideosReponse);
-    
+    const videoIds: string[] = [];
+
+    channelVideosReponse.forEach(
+      (item: {
+        contentDetails: {
+          upload?: {
+            videoId: string;
+          };
+          playlistItem?: {
+            resourceId: { videoId: string };
+          };
+        };
+      }) => {
+        if (item.contentDetails.upload) {
+          videoIds.push(item.contentDetails.upload.videoId);
+        } else if (item.contentDetails.playlistItem?.resourceId.videoId) {
+          videoIds.push(item.contentDetails.playlistItem.resourceId.videoId);
+        }
+      }
+    );
+
+    const vidReponse = await getActivitiesVideos(videoIds!);
+    const videosArray = await fetchVideosWithChannels(vidReponse.items);
+
+    setChannelVideosList(videosArray);
+
+    // console.log(
+    //   'You are using the useChannel hook to fetch videos reponse',
+    //   videosArray
+    // );
   };
 
-  return { channelInfo, fetchChannelInfo, fetchChannelData };
+  return { channelInfo, fetchChannelInfo, channelVideosList, fetchChannelData };
 };

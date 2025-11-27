@@ -8,7 +8,8 @@ import { fetchVideosWithChannels } from '../Utils/videoDetailsHelper';
 
 function Channel() {
   const { channelId } = useParams();
-  const { channelInfo, fetchChannelInfo, fetchChannelData } = useChannel();
+  const { channelInfo, fetchChannelInfo, fetchChannelData, channelVideosList } =
+    useChannel();
   const [showDescription, setShowDescription] = useState(false);
   const [category, setCategory] = useState('videos');
 
@@ -91,7 +92,9 @@ function Channel() {
           <hr />
         </div>
 
-        {category == 'videos' && <ChannelVideosList />}
+        {category == 'videos' && (
+          <ChannelVideosList channelVideosList={channelVideosList!} />
+        )}
       </div>
     </div>
   );
