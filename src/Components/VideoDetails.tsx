@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { FaThumbsUp, FaShareSquare } from 'react-icons/fa';
 
 import type { HomeVideoCardType } from '../Utils/Types';
+import { Link } from 'react-router-dom';
 
 function VideoDetails({ details }: { details?: HomeVideoCardType }) {
   const [showDescription, setShowDescription] = useState(false);
@@ -16,11 +17,13 @@ function VideoDetails({ details }: { details?: HomeVideoCardType }) {
         {/* Channel info */}
         <div className='flex items-center gap-3'>
           {/* <div className='w-10 h-10 rounded-full bg-pink-300'></div> */}
-          <img
-            src={details?.channelInfo.image}
-            className='w-10 h-10 rounded-full object-cover'
-            alt=''
-          />
+          <Link to={`/channel/${details?.channelInfo.id}`}>
+            <img
+              src={details?.channelInfo.image}
+              className='w-10 h-10 rounded-full object-cover'
+              alt=''
+            />
+          </Link>
           <div className='flex flex-col'>
             <h3 className='text-base font-semibold'>
               {details?.channelInfo.name}
