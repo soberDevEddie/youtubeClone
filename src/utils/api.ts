@@ -80,5 +80,5 @@ export const getChannelPlaylists = async (
 
   const response = await axios.get(url);
 
-  return response;
+  return response.data;
 };

@@ -24,6 +24,16 @@ function Channel() {
   const fetchChannelPlaylists = async () => {
     const playlistsReponse = await getChannelPlaylists(channelId!);
     console.log(`Playlist response`, playlistsReponse);
+
+    const channelPlaylistData = playlistsReponse.items.map((playlist: any) => ({
+      id: playlist.id,
+      title: playlist.snippet.title,
+      thumbnail:
+        playlist.snippet.thumbnails.high!.url ||
+        playlist.snippet.thumbnails!.default.url,
+      videoCount: playlist.contentDetails.itemCount,
+    }));
+    // console.log('channelPlaylistData', channelPlaylistData);
   };
 
   useEffect(() => {

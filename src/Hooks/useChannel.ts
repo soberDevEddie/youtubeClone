@@ -73,10 +73,10 @@ export const useChannel = () => {
       nextPageToken: channelVideosReponse.nextPageToken || null,
     }));
 
-    console.log(
-      'You are using the useChannel hook to fetch videos reponse',
-      videosArray
-    );
+    // console.log(
+    //   'You are using the useChannel hook to fetch videos reponse',
+    //   videosArray
+    // );
   };
 
   return { channelInfo, fetchChannelInfo, channelVideosList, fetchChannelData };
