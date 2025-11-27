@@ -5,6 +5,8 @@ import { GrClose } from 'react-icons/gr';
 import { useChannel } from '../Hooks/useChannel';
 import ChannelVideosList from '../Components/ChannelVideosList';
 import { fetchVideosWithChannels } from '../Utils/videoDetailsHelper';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import Loading from '../Components/Loading';
 
 function Channel() {
   const { channelId } = useParams();
@@ -41,72 +43,72 @@ function Channel() {
         </div>
       )}
 
-      <div className='w-[95%] mx-auto mt-8'>
-        <div className='row row-cols-2'>
-          {/* image */}
-          <div className='col-4'>
-            {/* <div className='w-52 aspect-square rounded-full bg-red-300 mx-auto'></div> */}
-            <img
-              className='w-52 aspect-square rounded-full mx-auto object-cover'
-              src={channelInfo?.thumbnail}
-              alt=''
-            />
-          </div>
-          {/* details */}
-          <div className='col-8'>
-            <h1 className='text-4xl font-semibold'>{channelInfo?.title}</h1>
-            <div className='flex gap-2 text-neutral-400 text-lg mt-2'>
-              <h2>{channelInfo?.customUrl}</h2>
-              <h2>{channelInfo?.subCount} Subsribers</h2>
-              <h2>{channelInfo?.videoCount} Videos</h2>
+      <InfiniteScroll
+        next={() => fetchMoreChannelVideos()}
+        hasMore={true}
+        dataLength={channelVideosList.videos.length}
+        loader={<Loading />}
+      >
+        <div className='w-[95%] mx-auto mt-8'>
+          <div className='row row-cols-2'>
+            {/* image */}
+            <div className='col-4'>
+              {/* <div className='w-52 aspect-square rounded-full bg-red-300 mx-auto'></div> */}
+              <img
+                className='w-52 aspect-square rounded-full mx-auto object-cover'
+                src={channelInfo?.thumbnail}
+                alt=''
+              />
             </div>
-            {channelInfo?.description && (
-              <div className=''>
-                <p className='w-[600px] line-clamp-3 text-neutral-400 whitespace-pre-line'>
-                  {channelInfo?.description}
-                </p>
-                <button
-                  onClick={() => setShowDescription(!showDescription)}
-                  className='font-semibold'
-                >
-                  more...
-                </button>
+            {/* details */}
+            <div className='col-8'>
+              <h1 className='text-4xl font-semibold'>{channelInfo?.title}</h1>
+              <div className='flex gap-2 text-neutral-400 text-lg mt-2'>
+                <h2>{channelInfo?.customUrl}</h2>
+                <h2>{channelInfo?.subCount} Subsribers</h2>
+                <h2>{channelInfo?.videoCount} Videos</h2>
               </div>
-            )}
+              {channelInfo?.description && (
+                <div className=''>
+                  <p className='w-[600px] line-clamp-3 text-neutral-400 whitespace-pre-line'>
+                    {channelInfo?.description}
+                  </p>
+                  <button
+                    onClick={() => setShowDescription(!showDescription)}
+                    className='font-semibold'
+                  >
+                    more...
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
+
+          <div className='my-3'>
+            <button
+              onClick={() => setCategory('videos')}
+              className={`w-44 tex-xl py-2 font-semibold ${
+                category === 'videos' ? 'border-b-2 border-red-600' : ''
+              }`}
+            >
+              Videos
+            </button>
+            <button
+              onClick={() => setCategory('playlists')}
+              className={`w-44 tex-xl py-2 font-semibold ${
+                category === 'playlists' ? 'border-b-2 border-red-600' : ''
+              }`}
+            >
+              Playlists
+            </button>
+            <hr />
+          </div>
+
+          {category == 'videos' && (
+            <ChannelVideosList channelVideos={channelVideosList!.videos} />
+          )}
         </div>
-
-        <div className='my-3'>
-          <button
-            onClick={() => setCategory('videos')}
-            className={`w-44 tex-xl py-2 font-semibold ${
-              category === 'videos' ? 'border-b-2 border-red-600' : ''
-            }`}
-          >
-            Videos
-          </button>
-          <button
-            onClick={() => setCategory('playlists')}
-            className={`w-44 tex-xl py-2 font-semibold ${
-              category === 'playlists' ? 'border-b-2 border-red-600' : ''
-            }`}
-          >
-            Playlists
-          </button>
-          <hr />
-        </div>
-
-        {category == 'videos' && (
-          <ChannelVideosList channelVideos={channelVideosList!.videos} />
-        )}
-
-        <button
-          onClick={() => fetchMoreChannelVideos()}
-          className='my-3 text-xl border p-2 rounded'
-        >
-          Show more
-        </button>
-      </div>
+      </InfiniteScroll>
     </div>
   );
 }

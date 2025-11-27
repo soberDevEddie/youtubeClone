@@ -12,7 +12,6 @@ import {
   getVideoDetails,
 } from '../Utils/api';
 
-
 function Watch() {
   const { videoId, channelId } = useParams();
   const [activities, setActivities] = useState<HomeVideoCardType[]>();
@@ -52,9 +51,10 @@ function Watch() {
         }) => {
           if (item.contentDetails.upload) {
             videoIds.push(item.contentDetails.upload.videoId);
-          } else if (item.contentDetails.playlistItem?.resourceId.videoId) {
-            videoIds.push(item.contentDetails.playlistItem.resourceId.videoId);
           }
+          // else if (item.contentDetails.playlistItem?.resourceId.videoId) {
+          //   videoIds.push(item.contentDetails.playlistItem.resourceId.videoId);
+          // }
         }
       );
 
@@ -100,8 +100,8 @@ function Watch() {
         </div>
         {/* Col 2 */}
         <div className='col-4 flex flex-col gap-3'>
-          {activities?.map((item, ind) => (
-            <MiniCard key={ind} item={item} />
+          {activities?.map((item) => (
+            <MiniCard key={item.videoId} item={item} />
           ))}
         </div>
       </div>

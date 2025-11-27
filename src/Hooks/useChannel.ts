@@ -58,9 +58,10 @@ export const useChannel = () => {
       }) => {
         if (item.contentDetails.upload) {
           videoIds.push(item.contentDetails.upload.videoId);
-        } else if (item.contentDetails.playlistItem?.resourceId.videoId) {
-          videoIds.push(item.contentDetails.playlistItem.resourceId.videoId);
         }
+        // } else if (item.contentDetails.playlistItem?.resourceId.videoId) {
+        //   videoIds.push(item.contentDetails.playlistItem.resourceId.videoId);
+        // }
       }
     );
 
