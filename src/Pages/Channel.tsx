@@ -8,6 +8,7 @@ function Channel() {
   const { channelId } = useParams();
   const { channelInfo, fetchChannelInfo } = useChannel();
   const [showDescription, setShowDescription] = useState(false);
+  const [category, setCategory] = useState('Videos');
 
   useEffect(() => {
     fetchChannelInfo(channelId!);
@@ -64,6 +65,27 @@ function Channel() {
               </div>
             )}
           </div>
+        </div>
+
+        <div className='my-3'>
+          <button
+            onClick={() => setCategory('videos')}
+            className={`w-44 tex-xl py-2 font-semibold ${
+              category === 'videos' ? 'border-b-2 border-red-600' : ''
+            }`}
+          >
+            Videos
+          </button>
+          <button
+            onClick={() => setCategory('playlists')}
+            className={`w-44 tex-xl py-2 font-semibold ${
+              category === 'playlists' ? 'border-b-2 border-red-600' : ''
+            }`}
+          >
+            Playlists
+          </button>
+          <hr />
+          {category}
         </div>
       </div>
     </div>
