@@ -8,38 +8,27 @@ import ChannelVideosList from '../Components/ChannelVideosList';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Loading from '../Components/Loading';
 import ChannelPlaylist from '../Components/ChannelPlaylist';
-import { getChannelPlaylists } from '../Utils/api';
+// import { getChannelPlaylists } from '../Utils/api';
 
 function Channel() {
   const { channelId } = useParams();
-  const { channelInfo, fetchChannelInfo, fetchChannelData, channelVideosList } =
-    useChannel();
+  const {
+    channelInfo,
+    fetchChannelInfo,
+    fetchChannelData,
+    channelVideosList,
+    category,
+    setCategory,
+  } = useChannel();
   const [showDescription, setShowDescription] = useState(false);
-  const [category, setCategory] = useState('videos');
 
   const fetchMoreChannelVideos = async () => {
     fetchChannelData(channelId!, channelVideosList!.nextPageToken!);
   };
 
-  const fetchChannelPlaylists = async () => {
-    const playlistsReponse = await getChannelPlaylists(channelId!);
-    console.log(`Playlist response`, playlistsReponse);
-
-    const channelPlaylistData = playlistsReponse.items.map((playlist: any) => ({
-      id: playlist.id,
-      title: playlist.snippet.title,
-      thumbnail:
-        playlist.snippet.thumbnails.high!.url ||
-        playlist.snippet.thumbnails!.default.url,
-      videoCount: playlist.contentDetails.itemCount,
-    }));
-    // console.log('channelPlaylistData', channelPlaylistData);
-  };
-
   useEffect(() => {
     fetchChannelInfo(channelId!);
     fetchChannelData(channelId!);
-    fetchChannelPlaylists();
   }, []);
 
   return (
