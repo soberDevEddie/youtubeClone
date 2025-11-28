@@ -1,6 +1,10 @@
 import { useState } from 'react';
 
-import type { ChannelInfoType, HomeVideoCardType } from '../Utils/Types';
+import type {
+  ChannelInfoType,
+  HomeVideoCardType,
+  ChannelPlaylistType,
+} from '../Utils/Types';
 import {
   getActivities,
   getChannelInfo,
@@ -9,22 +13,29 @@ import {
 } from '../Utils/api';
 import { fetchVideosWithChannels } from '../Utils/videoDetailsHelper';
 
-interface ChannelListState {
+interface ChannelVideoListState {
   videos: HomeVideoCardType[];
+  nextPageToken: string | null;
+}
+interface ChannelPlaylistListState {
+  playlists: ChannelPlaylistType[];
   nextPageToken: string | null;
 }
 
 export const useChannel = () => {
   const [category, setCategory] = useState('videos');
   const [channelInfo, setChannelInfo] = useState<ChannelInfoType | null>(null);
-  const [channelVideosList, setChannelVideosList] = useState<ChannelListState>({
-    videos: [],
-    nextPageToken: null,
-  });
-  const [channelPlaylists, setChannelPlaylists] = useState<ChannelListState>({
-    videos: [],
-    nextPageToken: null,
-  });
+  const [channelVideosList, setChannelVideosList] =
+    useState<ChannelVideoListState>({
+      videos: [],
+      nextPageToken: null,
+    });
+
+  const [channelPlaylists, setChannelPlaylists] =
+    useState<ChannelPlaylistListState>({
+      playlists: [],
+      nextPageToken: null,
+    });
 
   const fetchChannelInfo = async (channelId: string) => {
     try {
@@ -101,7 +112,7 @@ export const useChannel = () => {
       );
       console.log('channelPlaylistData', channelPlaylistData);
       setChannelPlaylists((prev) => ({
-        videos: [...prev.videos, ...channelPlaylistData],
+        playlists: [...prev.playlists, ...channelPlaylistData],
         nextPageToken: channelPlaylistData.nextPageToken || null,
       }));
     }
@@ -114,5 +125,6 @@ export const useChannel = () => {
     fetchChannelData,
     category,
     setCategory,
+    channelPlaylists,
   };
 };

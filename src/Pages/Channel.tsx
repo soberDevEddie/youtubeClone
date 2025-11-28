@@ -19,6 +19,7 @@ function Channel() {
     channelVideosList,
     category,
     setCategory,
+    channelPlaylists,
   } = useChannel();
   const [showDescription, setShowDescription] = useState(false);
 
@@ -29,7 +30,7 @@ function Channel() {
   useEffect(() => {
     fetchChannelInfo(channelId!);
     fetchChannelData(channelId!);
-  }, []);
+  }, [category]);
 
   return (
     <div className='relative mb-12'>
@@ -114,7 +115,7 @@ function Channel() {
           {category == 'videos' ? (
             <ChannelVideosList channelVideos={channelVideosList!.videos} />
           ) : (
-            <ChannelPlaylist />
+            <ChannelPlaylist channelPlaylists={channelPlaylists!.playlists} />
           )}
         </div>
       </InfiniteScroll>

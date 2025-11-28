@@ -1,10 +1,15 @@
-import ChannelPlaylistCard from "./ChannelPlaylistCard";
+import type { ChannelPlaylistType } from '../Utils/Types';
+import ChannelPlaylistCard from './ChannelPlaylistCard';
 
-function ChannelPlaylist() {
+function ChannelPlaylist({
+  channelPlaylists,
+}: {
+  channelPlaylists: ChannelPlaylistType[];
+}) {
   return (
     <div className='row row-cols-4 gap-y-4'>
-      {[...Array(20)].map((item: any) => (
-        <ChannelPlaylistCard />
+      {channelPlaylists?.map((item: ChannelPlaylistType) => (
+        <ChannelPlaylistCard item={item} />
       ))}
     </div>
   );
