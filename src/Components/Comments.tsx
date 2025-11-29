@@ -5,6 +5,7 @@ import CommentBody from './CommentBody';
 import type { CommentBodyType } from '../Utils/Types';
 import CommentCard from './CommentCard';
 import { getVideoComments } from '../Utils/api';
+import { parseComments } from '../Utils/parseData';
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 
@@ -28,17 +29,7 @@ function Comments({ videoId }: { videoId?: string }) {
       // console.log(`Comments Response`, commentsReponse.data);
       const items = commentsReponse.items;
 
-      const commentsData = items.map((comment: any) => ({
-        commentId: comment.id,
-        authorChannelId:
-          comment.snippet.topLevelComment.snippet.authorChannelId.value,
-        authorProfile:
-          comment.snippet.topLevelComment.snippet.authorProfileImageUrl,
-        authorName: comment.snippet.topLevelComment.snippet.authorDisplayName,
-        commentText: comment.snippet.topLevelComment.snippet.textOriginal,
-        commentLikes: comment.snippet.topLevelComment.snippet.likeCount,
-        commentRepliesCount: comment.snippet.totalReplyCount,
-      }));
+      const commentsData = parseComments(items);
 
       // console.log(commentsData);
 

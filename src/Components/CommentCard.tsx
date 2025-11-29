@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import CommentBody from './CommentBody';
 import type { CommentBodyType } from '../Utils/Types';
 import { getCommentReplies } from '../Utils/api';
+import { parseReplyComments } from '../Utils/parseData';
 
 function CommentCard({ comment }: { comment: CommentBodyType }) {
   const [replies, setReplies] = useState<CommentBodyType[]>([]);
@@ -12,14 +13,7 @@ function CommentCard({ comment }: { comment: CommentBodyType }) {
       if (comment.commentRepliesCount) {
         const repliesResponse = await getCommentReplies(comment.commentId);
 
-        const repliesData = repliesResponse.map((item: any) => ({
-          commentId: item.id,
-          authorChannelId: item.snippet.authorChannelId.value,
-          authorProfile: item.snippet.authorProfileImageUrl,
-          authorName: item.snippet.authorDisplayName,
-          commentText: item.snippet.textOriginal,
-          commentLikes: item.snippet.likeCount,
-        }));
+        const repliesData = parseReplyComments(repliesResponse);
 
         setReplies(repliesData);
       }
