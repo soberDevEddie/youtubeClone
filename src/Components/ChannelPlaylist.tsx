@@ -9,10 +9,11 @@ function ChannelPlaylist({
   return (
     <div className='row row-cols-4 gap-y-4'>
       {channelPlaylists?.map((item: ChannelPlaylistType) => (
-        <ChannelPlaylistCard item={item} />
+        <ChannelPlaylistCard key={item.id} item={item} />
       ))}
     </div>
   );
 }
 
 export default ChannelPlaylist;
+ 

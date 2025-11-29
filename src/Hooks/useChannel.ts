@@ -12,6 +12,7 @@ import {
   getChannelPlaylists,
 } from '../Utils/api';
 import { fetchVideosWithChannels } from '../Utils/videoDetailsHelper';
+import { parseChannelPlaylist } from '../Utils/parseData';
 
 interface ChannelVideoListState {
   videos: HomeVideoCardType[];
@@ -30,6 +31,7 @@ export const useChannel = () => {
       videos: [],
       nextPageToken: null,
     });
+  const [hasMoreVideos, setHasMoreVideos] = useState(true);
 
   const [channelPlaylists, setChannelPlaylists] =
     useState<ChannelPlaylistListState>({
@@ -60,7 +62,10 @@ export const useChannel = () => {
 
   const fetchChannelData = async (channelId: string, pageToken?: string) => {
     if (category == 'videos') {
-      const channelVideosReponse = await getActivities(channelId, pageToken);
+      const channelVideosReponse = await getActivities(
+        channelId,
+        channelVideosList.nextPageToken || undefined
+      );
 
       const videoIds: string[] = [];
 
@@ -92,29 +97,28 @@ export const useChannel = () => {
         nextPageToken: channelVideosReponse.nextPageToken || null,
       }));
 
+      setHasMoreVideos(videoIds.length <= Number(channelInfo?.videoCount));
+
       // console.log(
       //   'You are using the useChannel hook to fetch videos reponse',
       //   videosArray
       // );
       console.log(`channelVideosData:`, channelVideosReponse);
     } else {
-      const channelPlaylistResponse = await getChannelPlaylists(channelId!);
+      const channelPlaylistResponse = await getChannelPlaylists(
+        channelId!,
+        channelPlaylists.nextPageToken || undefined
+      );
 
-      const channelPlaylistData = channelPlaylistResponse.items.map(
-        (playlist: any) => ({
-          id: playlist.id,
-          title: playlist.snippet.title,
-          thumbnail:
-            playlist.snippet.thumbnails.high!.url ||
-            playlist.snippet.thumbnails!.default.url,
-          videoCount: playlist.contentDetails.itemCount,
-        })
+      const channelPlaylistData = parseChannelPlaylist(
+        channelPlaylistResponse.items
       );
       console.log('channelPlaylistData', channelPlaylistData);
       setChannelPlaylists((prev) => ({
         playlists: [...prev.playlists, ...channelPlaylistData],
-        nextPageToken: channelPlaylistData.nextPageToken || null,
+        nextPageToken: channelPlaylistResponse.nextPageToken || null,
       }));
+      setHasMoreVideos(Boolean(channelPlaylistResponse.nextPageToken));
     }
   };
 
@@ -126,5 +130,6 @@ export const useChannel = () => {
     category,
     setCategory,
     channelPlaylists,
+    hasMoreVideos
   };
 };

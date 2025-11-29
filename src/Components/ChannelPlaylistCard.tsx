@@ -8,7 +8,7 @@ function ChannelPlaylistCard({ item }: { item: ChannelPlaylistType }) {
       <div className='relative'>
         <div className='absolute flex bottom-2 gap-2 items-center right-2 bg-[#0c0c0cd0] px-2 py-0.5 rounded '>
           <FaList />
-          <h2>{item.videoCount}</h2>
+          <h2>{item.videoCount} videos</h2>
         </div>
         {/* <div className='bg-red-300 w-[300px] rounded aspect-[16/9]'></div> */}
         <img

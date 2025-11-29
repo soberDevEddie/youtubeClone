@@ -20,6 +20,7 @@ function Channel() {
     category,
     setCategory,
     channelPlaylists,
+    hasMoreVideos,
   } = useChannel();
   const [showDescription, setShowDescription] = useState(false);
 
@@ -53,7 +54,7 @@ function Channel() {
 
       <InfiniteScroll
         next={() => fetchMoreChannelVideos()}
-        hasMore={true}
+        hasMore={hasMoreVideos}
         dataLength={channelVideosList.videos.length}
         loader={<Loading />}
       >
