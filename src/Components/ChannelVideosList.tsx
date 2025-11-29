@@ -9,8 +9,8 @@ function ChannelVideosList({
   return (
     <div className='row row-cols-4 gap-y-4'>
       {channelVideos &&
-        channelVideos.map((item: HomeVideoCardType) => (
-          <ChannelVideoCards key={item.videoId} item={item} />
+        channelVideos.map((item: HomeVideoCardType, idx) => (
+          <ChannelVideoCards key={idx} item={item} />
         ))}
     </div>
   );
