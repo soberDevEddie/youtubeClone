@@ -60,3 +60,11 @@ export const parseReplyComments = (replies: any[]): CommentBodyType[] => {
     commentLikes: comment.snippet.likeCount,
   }));
 };
+
+export const parsePlaylistInfo = (playlist: any) => ({
+  id: playlist.id,
+  title: playlist.snippet.title,
+  description: playlist.snippet.description,
+  thumbnail: playlist.snippet.thumbnails?.high?.url,
+  itemCount: playlist.contentDetails.itemCount,
+});
