@@ -42,3 +42,11 @@ export interface ChannelPlaylistType {
   thumbnail: string;
   videoCount: string;
 }
+
+export interface PlaylistInfoType {
+  id: string;
+  title: string;
+  description: string;
+  thumbnail: string;
+  itemCount: string;
+}
