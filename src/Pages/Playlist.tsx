@@ -34,7 +34,6 @@ function Playlist() {
 
   return (
     <div className='relative'>
-
       {/* Modal */}
 
       {showDescription && playlistInfo?.description && (
@@ -52,6 +51,7 @@ function Playlist() {
           </div>
         </div>
       )}
+
       <div className='w-[90%] mx-auto mt-8'>
         <div className='row row-cols-2 bg-neutral-900 p-5 rounded-xl'>
           {/* image */}
@@ -64,24 +64,53 @@ function Playlist() {
             />
           </div>
           {/* details */}
-          <div className='col-8 flex flex-col gap-2'>
-            <h1 className='text-4xl font-semibold'>{playlistInfo?.title}</h1>
-            <div className='flex gap-2 text-neutral-400 text-lg mt-2'></div>
+
+          <div className='col-md-8 col-12 flex flex-col gap-2'>
+            <h1 className='md:text-4xl sm:text-3xl text-2xl font-semibold'>
+              {playlistInfo?.title}
+            </h1>
+
             {playlistInfo?.description && (
               <div className=''>
-                <p className='w-[600px] line-clamp-3 text-neutral-400 whitespace-pre-line'>
+                <p className='line-clamp-3 text-neutral-400 whitespace-pre-line'>
                   {playlistInfo?.description}
                 </p>
                 <button
-                  onClick={() => setShowDescription(!showDescription)}
+                  onClick={() => setShowDescription(true)}
                   className='font-semibold'
                 >
-                  more...
+                  more
                 </button>
               </div>
             )}
           </div>
         </div>
+      </div>
+
+      <div className='row row-cols-4 gap-y-2 mt-4'>
+        {/* Playlist video card */}
+        {[...Array(12)].map((item: any) => (
+          <div className='col flex flex-col'>
+            {/* Thumbnail */}
+            <div className='relative'>
+              <div className='absolute flex gap-2 items-center top-0 left-0 bg-[#0c0c0cd0] px-2 py-0.5 h-full w-[100px] '>
+                <h2 className='text-center w-full'>1</h2>
+              </div>
+              <div className='bg-red-300 w-[300px] rounded aspect-[16/9]'></div>
+              {/* <img
+            src={item.thumbnail}
+            className='bg-red-300 w-[300px] object-cover rounded aspect-[16/9]'
+            alt=''
+          /> */}
+            </div>
+
+            {/* Playlist Video Title */}
+
+            <div className='flex flex-col gap-1 mt-1'>
+              <h1 className='text-md line-clamp-1'>Playlist Video title</h1>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

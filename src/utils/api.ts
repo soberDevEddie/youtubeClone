@@ -89,4 +89,4 @@ export const getPlaylistInfo = async (playlistId: string) => {
   const response = await axios.get(url);
 
   return response.data.items[0];
-}
+};
