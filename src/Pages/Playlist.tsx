@@ -1,35 +1,39 @@
 import { useParams } from 'react-router-dom';
 
-import { getPlaylistInfo } from '../Utils/api';
+// import { getPlaylistInfo } from '../Utils/api';
 import { useEffect, useState } from 'react';
-import type { PlaylistInfoType } from '../Utils/Types';
+// import type { PlaylistInfoType } from '../Utils/Types';
 import { GrClose } from 'react-icons/gr';
+import { usePlaylistInfo } from '../Hooks/usePlaylist';
+import { getPlaylistVideos } from '../Utils/api';
+import type { PlaylistVideoType } from '../Utils/Types';
+
+interface PlaylistItemsState {
+  videos: PlaylistVideoType[];
+  nextPageToken: string | null;
+}
 
 function Playlist() {
   const { channelId, playlistId } = useParams();
-  const [playlistInfo, setPlaylistInfo] = useState<PlaylistInfoType | null>(
-    null
-  );
-  const [showDescription, setShowDescription] = useState(false);
+  const {
+    playlistInfo,
+    fetchPlaylistData,
+    showDescription,
+    setShowDescription,
+  } = usePlaylistInfo();
+  const [playlistItems, setPlaylistItems] = useState<PlaylistItemsState[]>({
+    videos: [],
+    nextPageToken: null,
+  });
 
-  const fetchPlaylistData = async () => {
-    const playlistInfoReponse = await getPlaylistInfo(playlistId!);
-    // console.log("playlistInfoReponse", playlistInfoReponse);
-
-    const playlistInfoData = {
-      id: playlistInfoReponse.id,
-      title: playlistInfoReponse.snippet.title,
-      description: playlistInfoReponse.snippet.description,
-      thumbnail: playlistInfoReponse.snippet.thumbnails?.high?.url,
-      itemCount: playlistInfoReponse.contentDetails.itemCount,
-    };
-
-    console.log('playlistInfo', playlistInfoData);
-    setPlaylistInfo(playlistInfoData);
+  const fetchPlaylistVideos = async () => {
+    const playlistVideosResponse = await getPlaylistVideos(playlistId!);
+    console.log('playlistVideosResponse', playlistVideosResponse);
   };
 
   useEffect(() => {
-    fetchPlaylistData();
+    fetchPlaylistData(playlistId!);
+    fetchPlaylistVideos();
   }, []);
 
   return (

@@ -50,3 +50,10 @@ export interface PlaylistInfoType {
   thumbnail: string;
   itemCount: string;
 }
+
+export interface PlaylistVideoType {
+  id: string;
+  title: string;
+  thumbnail: string;
+  duration: string;
+}

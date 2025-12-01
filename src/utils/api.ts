@@ -90,3 +90,16 @@ export const getPlaylistInfo = async (playlistId: string) => {
 
   return response.data.items[0];
 };
+
+export const getPlaylistVideos = async (
+  playlistId: string,
+  pageToken?: string
+) => {
+  const url = `${BASE_URL}/playlistItems?key=${API_KEY}&part=snippet,contentDetails&playlistId=${playlistId}${
+    pageToken ? `&pageToken=${pageToken}` : ''
+  }&maxResults=20`;
+
+  const response = await axios.get(url);
+
+  return response.data;
+};

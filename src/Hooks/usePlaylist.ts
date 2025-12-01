@@ -12,7 +12,7 @@ export const usePlaylistInfo = () => {
 
   const fetchPlaylistData = async (playlistId: string | null) => {
     const playlistInfoReponse = await getPlaylistInfo(playlistId!);
-    console.log("playlistInfoReponse", playlistInfoReponse);
+    // console.log("playlistInfoReponse", playlistInfoReponse);
 
     const playlistInfoData = parsePlaylistInfo(playlistInfoReponse);
 
