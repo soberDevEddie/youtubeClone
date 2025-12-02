@@ -1,6 +1,7 @@
 import { useSearchParams } from 'react-router-dom';
-import { getSearchVideos } from '../Utils/api';
+import { getActivitiesVideos, getSearchVideos } from '../Utils/api';
 import { useEffect } from 'react';
+import { fetchVideosWithChannels } from '../Utils/videoDetailsHelper';
 
 function Search() {
   const [searchParams] = useSearchParams();
@@ -9,7 +10,23 @@ function Search() {
   const fetchSearch = async () => {
     try {
       const searchVideosResponse = await getSearchVideos(searchQuery!);
-      console.log("searchVideosResponse", searchVideosResponse);
+      // console.log('searchVideosResponse', searchVideosResponse);
+
+      const videoIds: string[] = [];
+
+      searchVideosResponse.items.forEach(
+        (item: { id: { videoId: string } }) => {
+          if (item.id.videoId) {
+            videoIds.push(item.id.videoId);
+          }
+        }
+      );
+      const searchVideosData = await getActivitiesVideos(videoIds);
+      // console.log('searchVideosData', searchVideosData);
+
+      const videosData = await getActivitiesVideos(videoIds);
+      const videosArray = await fetchVideosWithChannels(searchVideosData.items);
+      console.log('videosArray', videosArray);
     } catch (error) {
       console.log(error);
     }
