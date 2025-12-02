@@ -21,14 +21,28 @@ function Playlist() {
     showDescription,
     setShowDescription,
   } = usePlaylistInfo();
-  const [playlistItems, setPlaylistItems] = useState<PlaylistItemsState[]>({
+  const [playlistItems, setPlaylistItems] = useState<PlaylistItemsState>({
     videos: [],
     nextPageToken: null,
   });
 
   const fetchPlaylistVideos = async () => {
     const playlistVideosResponse = await getPlaylistVideos(playlistId!);
-    console.log('playlistVideosResponse', playlistVideosResponse);
+
+    const playlistVideosData = playlistVideosResponse.items.map(
+      (item: any) => ({
+        id: item.id,
+        title: item.snippet.title,
+        thumbnail:
+          item.snippet.thumbnails.high!.url! ||
+          item.snippet.thumbnails.standard!.url!,
+      })
+    );
+    console.log('playlistVideosResponse', playlistVideosData);
+    setPlaylistItems((prev) => ({
+      videos: [...prev.videos, ...playlistVideosData],
+      nextPageToken: playlistVideosResponse.nextPageToken,
+    }));
   };
 
   useEffect(() => {
@@ -91,30 +105,28 @@ function Playlist() {
         </div>
       </div>
 
-      <div className='row row-cols-4 gap-y-2 mt-4'>
-        {/* Playlist video card */}
-        {[...Array(12)].map((item: any) => (
-          <div className='col flex flex-col'>
-            {/* Thumbnail */}
-            <div className='relative'>
-              <div className='absolute flex gap-2 items-center top-0 left-0 bg-[#0c0c0cd0] px-2 py-0.5 h-full w-[100px] '>
-                <h2 className='text-center w-full'>1</h2>
+      <div className='container-fluid mt-10'>
+        <div className='row justify-content-center g-5'>
+          {playlistItems.videos.map((item: PlaylistVideoType, index) => (
+            <div className='col-xl-3 col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center'>
+              <div className='w-100' style={{ maxWidth: '300px' }}>
+                {/* Thumbnail */}
+                <div className='relative'>
+                  <div className='absolute flex gap-2 items-center top-0 left-0 bg-[#0c0c0cd0] px-2 py-0.5 h-full w-[100px]'>
+                    <h2 className='text-center w-full text-2xl text-neutral-400'>{index + 1}</h2>
+                  </div>
+                  <img src={item.thumbnail} className='w-full rounded aspect-[16/9]' alt="" />
+                  {/* <div className='bg-red-300 w-full rounded aspect-[16/9]'></div> */}
+                </div>
+
+                {/* Playlist Video Title */}
+                <div className='flex flex-col gap-1 mt-1'>
+                  <h1 className='text-md line-clamp-1'>{item.title}</h1>
+                </div>
               </div>
-              <div className='bg-red-300 w-[300px] rounded aspect-[16/9]'></div>
-              {/* <img
-            src={item.thumbnail}
-            className='bg-red-300 w-[300px] object-cover rounded aspect-[16/9]'
-            alt=''
-          /> */}
             </div>
-
-            {/* Playlist Video Title */}
-
-            <div className='flex flex-col gap-1 mt-1'>
-              <h1 className='text-md line-clamp-1'>Playlist Video title</h1>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
