@@ -12,6 +12,7 @@ import Search from './Pages/Search';
 function App() {
   const [filter, setFilter] = useState('home');
   const [categoryId, setCategoryId] = useState<string | null>(null);
+  const [search, setSearch] = useState('');
 
   return (
     <BrowserRouter>
@@ -26,7 +27,7 @@ function App() {
           setCategoryId={setCategoryId}
         />
       </div>
-      <Navbar />
+      <Navbar search={search} setSearch={setSearch} />
 
       <Routes>
         <Route
@@ -34,7 +35,7 @@ function App() {
           element={<Home filter={filter} categoryId={categoryId} />}
         />
         <Route path='/watch/:videoId/:channelId' element={<Watch />} />
-        <Route path='/search' element={<Search/>} />
+        <Route path='/search' element={<Search setSearch={setSearch}/>} />
         <Route path='/channel/:channelId' element={<Channel />} />
         <Route
           path='/playlist/:channelId/:playlistId'

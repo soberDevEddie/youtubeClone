@@ -42,7 +42,7 @@ function Channel() {
             <div className=''>
               <GrClose
                 onClick={() => setShowDescription(false)}
-                className='text-2xl text-neutral-200'
+                className='text-2xl text-neutral-200 hover:cursor-pointer'
               />
             </div>
             <p className='text-lg whitespace-pre-line'>

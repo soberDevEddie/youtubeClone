@@ -1,11 +1,14 @@
 import { useSearchParams } from 'react-router-dom';
 import { getActivitiesVideos, getSearchVideos } from '../Utils/api';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchVideosWithChannels } from '../Utils/videoDetailsHelper';
+import type { HomeVideoCardType } from '../Utils/Types';
+import Card from '../Components/Card';
 
-function Search() {
+function Search({ setSearch }: { setSearch: (q: string) => void }) {
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get('query');
+  const [searchList, setSearchList] = useState<HomeVideoCardType[] | null>();
 
   const fetchSearch = async () => {
     try {
@@ -26,16 +29,32 @@ function Search() {
 
       const videosData = await getActivitiesVideos(videoIds);
       const videosArray = await fetchVideosWithChannels(searchVideosData.items);
-      console.log('videosArray', videosArray);
+      // console.log('videosArray', videosArray);
+
+      setSearchList(videosArray);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    fetchSearch();
-  }, []);
-  return <div>{searchQuery}</div>;
+    if (searchQuery) {
+      setSearchList(null);
+      fetchSearch();
+    }
+    return () => {
+      setSearchList(null);
+      setSearch('');
+    };
+  }, [searchQuery]);
+
+  return (
+    <div className='row row-cols-3 w-[95%] mx-auto mt-6'>
+      {searchList?.map((item: HomeVideoCardType) => (
+        <Card data={item} />
+      ))}
+    </div>
+  );
 }
 
 export default Search;

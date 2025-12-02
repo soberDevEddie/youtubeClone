@@ -4,9 +4,14 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import { FaSearch, FaYoutube } from 'react-icons/fa';
 import { GrClose } from 'react-icons/gr';
 
-function Navbar() {
+function Navbar({
+  search,
+  setSearch,
+}: {
+  search: string;
+  setSearch: (q: string) => void;
+}) {
   const navigate = useNavigate();
-  const [search, setSearch] = useState('');
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -46,13 +51,19 @@ function Navbar() {
             <div className='flex items-center h-10 border-[0.6px] border-neutral-700 rounded-full overflow-hidden'>
               <div className='flex items-center pr-5 '>
                 <input
+                  value={search}
                   type='text'
                   placeholder='Search'
                   className='w-96 px-3 text-lg text-zinc-300 bg-[#0c0c0c] focus:outline-none placeholder-neutral-500'
                   onChange={(e) => setSearch(e.target.value)}
                   onKeyDown={handleKeyPress}
                 />
-                <GrClose className='text-lg cursor-pointer text-neutral-400' />
+                <GrClose
+                  onClick={() => setSearch('')}
+                  className={`text-lg cursor-pointer text-neutral-400 ${
+                    !search ? 'invisible' : 'visible'
+                  }`}
+                />
               </div>
               <button className='flex justify-center w-16 border-l-[1px] border-neutral-700'>
                 <FaSearch className='text-2xl text-neutral-200' />
@@ -60,10 +71,7 @@ function Navbar() {
             </div>
           </form>
         </div>
-        <div className=''>
-          {/* Empty */}
-          {search}
-        </div>
+        <div className=''></div>
       </div>
     </div>
   );
