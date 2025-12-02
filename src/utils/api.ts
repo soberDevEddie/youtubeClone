@@ -103,3 +103,13 @@ export const getPlaylistVideos = async (
 
   return response.data;
 };
+
+export const getSearchVideos = async (query: string, pageToken?: string) => {
+  const url = `${BASE_URL}/search?key=${API_KEY}&part=snippet&maxResults=20&q=${query}${
+    pageToken ? `&pageToken=${pageToken}` : ''
+  }`;
+
+  const response = await axios.get(url);
+
+  return response.data;
+}
