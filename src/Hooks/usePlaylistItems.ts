@@ -19,7 +19,7 @@ export const usePlaylistItems = () => {
 
     const playlistVideosData = playlistVideosResponse.items.map(
       (item: any) => ({
-        id: item.id,
+        id: item.snippet.resourceId.videoId,
         title: item.snippet.title,
         thumbnail:
           item.snippet.thumbnails.high!.url! ||
@@ -33,5 +33,5 @@ export const usePlaylistItems = () => {
     }));
   };
 
-  return {playlistItems, fetchPlaylistVideos}
+  return { playlistItems, fetchPlaylistVideos };
 };

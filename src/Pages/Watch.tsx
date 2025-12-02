@@ -80,7 +80,7 @@ function Watch() {
   useEffect(() => {
     fetchDetails();
     fetchActivities();
-  }, []);
+  }, [videoId, channelId]);
 
   return (
     <div className='w-[95%] mx-auto mt-6 mb-12'>

@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react';
 // import type { PlaylistInfoType } from '../Utils/Types';
 import { GrClose } from 'react-icons/gr';
 import { usePlaylistInfo } from '../Hooks/usePlaylist';
-import { getPlaylistVideos } from '../Utils/api';
-import type { PlaylistVideoType } from '../Utils/Types';
+// import { getPlaylistVideos } from '../Utils/api';
+// import type { PlaylistVideoType } from '../Utils/Types';
 import { usePlaylistItems } from '../Hooks/usePlaylistItems';
 import PlaylistItems from '../Components/PlaylistItems';
 
@@ -26,7 +26,7 @@ function Playlist() {
   }, []);
 
   return (
-    <div className='relative'>
+    <div className='relative '>
       {/* Modal */}
 
       {showDescription && playlistInfo?.description && (
@@ -79,7 +79,7 @@ function Playlist() {
           </div>
         </div>
       </div>
-      <PlaylistItems videos={playlistItems.videos}/>
+      <PlaylistItems channelId={channelId!} videos={playlistItems.videos} />
     </div>
   );
 }

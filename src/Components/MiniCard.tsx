@@ -1,8 +1,10 @@
+import { Link } from 'react-router-dom';
 import type { HomeVideoCardType } from '../Utils/Types';
 
 function MiniCard({ item }: { item: HomeVideoCardType }) {
   return (
-    <div className='flex gap-3'>
+    <Link to={`/watch/${item.videoId}/${item.channelInfo.id}`}>
+    <div className='flex gap-3 hover:scale-[102%] duration-200 ease-in-out'>
       <div className='relative h-22 min-w-fit'>
         <span className='absolute bottom-1 right-1 bg-[#0c0c0cd0] px-2 py-0.5 rounded'>
           {item.videoDuration}
@@ -12,7 +14,7 @@ function MiniCard({ item }: { item: HomeVideoCardType }) {
           src={item.videoThumbnail}
           className='max-w-40 aspect-[16/9] rounded object-cover'
           alt=''
-        />
+          />
       </div>
       <div className=''>
         <h4 className=''>{item.videoTitle}</h4>
@@ -26,6 +28,7 @@ function MiniCard({ item }: { item: HomeVideoCardType }) {
         </div>
       </div>
     </div>
+          </Link>
   );
 }
 

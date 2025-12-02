@@ -1,13 +1,12 @@
-import React from 'react';
 import type { PlaylistVideoType } from '../Utils/Types';
 import PlaylistItemCard from './PlaylistItemCard';
 
-function PlaylistItems({ videos }: { videos: PlaylistVideoType[] }) {
+function PlaylistItems({ videos, channelId }: { videos: PlaylistVideoType[], channelId: string}) {
   return (
-    <div className='container-fluid mt-10'>
-      <div className='row justify-content-center g-5'>
+    <div className='container-fluid mt-10 '>
+      <div className='row justify-content-center g-5 '>
         {videos.map((item: PlaylistVideoType, index) => (
-          <PlaylistItemCard item={item} index={index} key={item.id} />
+          <PlaylistItemCard channelId={channelId} item={item} index={index} key={item.id} />
         ))}
       </div>
     </div>

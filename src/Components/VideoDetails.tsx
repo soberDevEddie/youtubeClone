@@ -20,7 +20,7 @@ function VideoDetails({ details }: { details?: HomeVideoCardType }) {
           <Link to={`/channel/${details?.channelInfo.id}`}>
             <img
               src={details?.channelInfo.image}
-              className='w-10 h-10 rounded-full object-cover'
+              className='w-10 h-10 rounded-full object-cover hover:scale-[108%] duration-200 ease-in-out'
               alt=''
             />
           </Link>
@@ -29,7 +29,7 @@ function VideoDetails({ details }: { details?: HomeVideoCardType }) {
               {details?.channelInfo.name}
             </h3>
             <p className='text-sm text-gray-400'>
-              {details?.channelInfo.subCount}
+              {details?.channelInfo.subCount} subscribers
             </p>
           </div>
         </div>

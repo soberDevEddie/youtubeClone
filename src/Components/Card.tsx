@@ -3,7 +3,7 @@ import type { HomeVideoCardType } from '../Utils/Types';
 
 function Card({ data }: { data: HomeVideoCardType }) {
   return (
-    <div className='flex flex-col gap-3 pb-3'>
+    <div className='flex flex-col gap-3 pb-3 hover:scale-[102%] duration-200 ease-in-out'>
       {/* thumbnail */}
       <div className='relative'>
         <Link
@@ -26,7 +26,7 @@ function Card({ data }: { data: HomeVideoCardType }) {
           <img
             src={data.channelInfo.image}
             alt='Channel Logo'
-            className='aspect-square rounded-full h-12 w-12 object-cover'
+            className='aspect-square rounded-full h-12 w-12 object-cover hover:scale-[110%] duration-300 ease-in-out'
           />
         </Link>
         <div className='flex flex-col overflow-hidden'>
