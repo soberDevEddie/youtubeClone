@@ -1,12 +1,24 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { FaSearch, FaYoutube } from 'react-icons/fa';
 import { GrClose } from 'react-icons/gr';
-import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
   const navigate = useNavigate();
+  const [search, setSearch] = useState('');
 
-  
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (search.trim()) {
+        navigate(`/search?query=${search}`);
+      } else {
+        navigate('/');
+      }
+    }
+  };
+
   return (
     <div className='w-full bg-[#0c0c0c] sticky-top'>
       <div className='flex justify-between w-[95%] mx-auto h-14 '>
@@ -21,12 +33,13 @@ function Navbar() {
             <GiHamburgerMenu className='text-xl' />
           </a>
 
-          <div className='flex items-center gap-1 hover:cursor-pointer'
-        onClick={() => navigate('/')}
-        >
-          <FaYoutube className='text-3xl text-red-600' />
-          <span className='text-xl'>YouTube</span>
-        </div>
+          <div
+            className='flex items-center gap-1 hover:cursor-pointer'
+            onClick={() => navigate('/')}
+          >
+            <FaYoutube className='text-3xl text-red-600' />
+            <span className='text-xl'>YouTube</span>
+          </div>
         </div>
         <div className='flex items-center'>
           <form>
@@ -36,6 +49,8 @@ function Navbar() {
                   type='text'
                   placeholder='Search'
                   className='w-96 px-3 text-lg text-zinc-300 bg-[#0c0c0c] focus:outline-none placeholder-neutral-500'
+                  onChange={(e) => setSearch(e.target.value)}
+                  onKeyDown={handleKeyPress}
                 />
                 <GrClose className='text-lg cursor-pointer text-neutral-400' />
               </div>
@@ -45,7 +60,10 @@ function Navbar() {
             </div>
           </form>
         </div>
-        <div className=''>{/* Empty */}</div>
+        <div className=''>
+          {/* Empty */}
+          {search}
+        </div>
       </div>
     </div>
   );

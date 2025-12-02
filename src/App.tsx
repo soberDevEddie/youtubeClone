@@ -7,6 +7,7 @@ import Home from './Pages/Home';
 import Watch from './Pages/Watch';
 import Channel from './Pages/Channel';
 import Playlist from './Pages/Playlist';
+import Search from './Pages/Search';
 
 function App() {
   const [filter, setFilter] = useState('home');
@@ -33,6 +34,7 @@ function App() {
           element={<Home filter={filter} categoryId={categoryId} />}
         />
         <Route path='/watch/:videoId/:channelId' element={<Watch />} />
+        <Route path='/search' element={<Search/>} />
         <Route path='/channel/:channelId' element={<Channel />} />
         <Route
           path='/playlist/:channelId/:playlistId'
