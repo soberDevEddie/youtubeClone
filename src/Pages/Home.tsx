@@ -40,7 +40,7 @@ function Home({
           dataLength={homeVideos[filter].videos.length}
           loader={<Loading/>}
         >
-          <div className='row row-cols-3 w-[95%] mx-auto mt-6'>
+          <div className='row row-cols-md-3 row-cols-lg-4 row-cols-sm-2 w-[95%] mx-auto mt-6'>
             {homeVideos[filter].videos?.map((item) => (
               <Card key={item.videoId} data={item} />
             ))}

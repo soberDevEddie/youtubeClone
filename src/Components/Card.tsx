@@ -16,7 +16,7 @@ function Card({ data }: { data: HomeVideoCardType }) {
             className='aspect-[16/9] object-cover rounded-xl w-full'
           />
         </Link>
-        <span className='absolute bottom-3 right-3 bg-[#0c0c0cd0] px-2 py-0.5 text-sm rounded'>
+        <span className='absolute sm:bottom-3 bottom-2 sm:right-3 right-2 bg-[#0c0c0cd0] px-2 py-0.5 text-sm rounded'>
           {data.videoDuration}
         </span>
       </div>
@@ -30,8 +30,8 @@ function Card({ data }: { data: HomeVideoCardType }) {
           />
         </Link>
         <div className='flex flex-col overflow-hidden'>
-          <h3 className='text-lg line-clamp-2'>{data.videoTitle}</h3>
-          <div className='text-md'>
+          <h3 className='sm:text-lg text-md line-clamp-2'>{data.videoTitle}</h3>
+          <div className='sm:text-md text-sm'>
             <h4>{data.channelInfo.name}</h4>
             <div className='flex gap-1'>
               <span>{data.videoViews}</span>
