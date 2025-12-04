@@ -84,22 +84,23 @@ function Watch() {
 
   return (
     <div className='w-[95%] mx-auto mt-6 mb-12'>
-      <div className='row'>
-        {/* Col 1 */}
-        <div className='col-8'>
-          {/* <div className='w-full aspect-[16/9] bg-red-400'></div> */}
+      <div className='grid grid-cols-1 md:grid-cols-12 gap-4'>
+        {/* Col 1: Video + details + comments */}
+        <div className='md:col-span-8 col-span-12'>
           <iframe
-            className='w-full aspect-[16/9]'
+            className='w-full aspect-video md:aspect-[16/9]'
             src={`https://www.youtube.com/embed/${details?.videoId}?autoplay=1`}
             title='Youtube Video Player'
-            allow='autoplay; picture-inpicture;'
+            allow='autoplay; picture-in-picture;'
             allowFullScreen
           ></iframe>
+
           <VideoDetails details={details} />
           <Comments videoId={details?.videoId} />
         </div>
-        {/* Col 2 */}
-        <div className='col-4 flex flex-col gap-3'>
+
+        {/* Col 2: Suggested/related videos (hidden on small screens) */}
+        <div className='md:col-span-4 col-span-12 hidden md:block flex flex-col gap-3'>
           {activities?.map((item) => (
             <MiniCard key={item.videoId} item={item} />
           ))}
